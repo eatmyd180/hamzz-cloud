@@ -5,21 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Documentation - Hamzz Cloud</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
-            background: #f1f5f9;
+            font-family: 'Inter', system-ui, sans-serif;
+            background: #0f0f1a;
+            min-height: 100vh;
         }
 
-        /* Navbar */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background: radial-gradient(ellipse at 20% 30%, #667eea15, #0f0f1a);
+        }
+
         .navbar {
-            background: white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 15, 26, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
@@ -28,69 +41,107 @@
             gap: 1rem;
         }
 
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
         .logo h1 {
             font-size: 1.5rem;
             background: linear-gradient(135deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-weight: 700;
         }
 
         .nav-links {
             display: flex;
             gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: #475569;
+            color: #a0a0b0;
+            transition: color 0.2s;
+            font-weight: 500;
         }
 
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
+        .nav-links a:hover { color: #667eea; }
 
-        /* Hero */
-        .hero {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 1rem;
-            padding: 3rem;
+        .btn-glass {
+            background: rgba(102, 126, 234, 0.15);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            padding: 0.5rem 1.25rem;
+            border-radius: 40px;
             color: white;
-            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
         }
 
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.125rem;
-            opacity: 0.9;
-        }
-
-        .base-url {
-            background: rgba(255,255,255,0.2);
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            font-family: monospace;
-            margin-top: 1rem;
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
             display: inline-block;
         }
 
-        /* Endpoint Cards */
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .hero h1 { font-size: 2.5rem; color: white; margin-bottom: 1rem; }
+        .hero p { color: rgba(255,255,255,0.9); font-size: 1.125rem; }
+        .base-url {
+            background: rgba(0,0,0,0.3);
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            display: inline-block;
+            margin-top: 1rem;
+            font-size: 1rem;
+        }
+
         .endpoint {
-            background: white;
-            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
             margin-bottom: 1.5rem;
             overflow: hidden;
+            animation: fadeInUp 0.6s ease 0.1s both;
         }
 
         .endpoint-header {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid #e2e8f0;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             gap: 1rem;
             align-items: center;
@@ -99,47 +150,47 @@
 
         .method {
             font-weight: 700;
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.25rem;
+            padding: 0.35rem 1rem;
+            border-radius: 40px;
             font-size: 0.875rem;
         }
-
         .method.post { background: #10b981; color: white; }
         .method.get { background: #3b82f6; color: white; }
         .method.delete { background: #ef4444; color: white; }
 
         .path {
-            font-family: monospace;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 1.125rem;
             font-weight: 500;
+            color: white;
         }
 
-        .endpoint-body {
-            padding: 1.5rem;
-        }
+        .endpoint-body { padding: 1.5rem; }
 
-        h4 {
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-            margin-top: 1rem;
-        }
+        h4 { color: white; margin: 1.5rem 0 0.75rem; font-size: 1rem; }
+        h4:first-of-type { margin-top: 0; }
 
         pre {
-            background: #1e293b;
-            color: #e2e8f0;
-            padding: 1rem;
-            border-radius: 0.5rem;
+            background: #0a0a0f;
+            border: 1px solid #2a2a3a;
+            border-radius: 12px;
+            padding: 1.25rem;
             overflow-x: auto;
             margin: 0.75rem 0;
+            font-size: 0.9rem;
         }
 
         code {
-            font-family: monospace;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            line-height: 1.5;
         }
 
         .response-example {
-            background: #f8fafc;
+            background: rgba(0, 0, 0, 0.3);
             border-left: 3px solid #667eea;
+            border-radius: 12px;
             padding: 1rem;
             margin: 0.75rem 0;
         }
@@ -149,35 +200,44 @@
             border-collapse: collapse;
             margin: 1rem 0;
         }
-
         th, td {
             padding: 0.75rem;
             text-align: left;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #c0c0d0;
+        }
+        th { color: white; font-weight: 600; background: rgba(255,255,255,0.03); }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        th {
-            background: #f8fafc;
-            font-weight: 600;
-        }
-
-        .try-it {
-            background: #f1f5f9;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-top: 1rem;
+        @media (max-width: 768px) {
+            .navbar { padding: 1rem; }
+            .hero { padding: 1.5rem; }
+            .hero h1 { font-size: 1.5rem; }
+            .container { padding: 1rem; }
+            pre { font-size: 0.7rem; padding: 0.75rem; }
         }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo"><h1>Hamzz Cloud</h1></div>
+    <div class="bg-gradient"></div>
+
+    <nav class="navbar">
+        <div class="logo" onclick="window.location.href='/'">
+            <div class="logo-icon">☁️</div>
+            <h1>Hamzz Cloud</h1>
+        </div>
         <div class="nav-links">
             <a href="/">Home</a>
+            <a href="/docs">Docs</a>
             <a href="/pricing">Pricing</a>
-            <a href="/login">Login</a>
+            <a href="/login" class="btn-glass">Sign In</a>
+            <a href="/dashboard" class="btn-primary">Dashboard</a>
         </div>
-    </div>
+    </nav>
 
     <div class="container">
         <div class="hero">
@@ -186,42 +246,42 @@
             <div class="base-url">Base URL: https://hamzz-cloud.vercel.app/api\</div\>
         </div>
 
-        <h2 style="margin-bottom: 1rem;">Authentication</h2>
+        <h2 style="color: white; margin-bottom: 1rem;">Authentication</h2>
         <div class="endpoint">
             <div class="endpoint-body">
-                <p>Semua endpoint memerlukan <strong>API Key</strong> yang dapat diperoleh dari dashboard setelah registrasi.</p>
+                <p style="color: #c0c0d0; margin-bottom: 1rem;">Semua endpoint memerlukan <strong style="color: #667eea;">API Key</strong> yang dapat diperoleh dari dashboard setelah registrasi.</p>
                 <pre><code>Headers:
   x-api-key: hk_your_api_key_here</code></pre>
-                <p>Atau menggunakan query parameter:</p>
-                <pre><code>https://api.hamzz.cloud/upload\?api_key\=hk_your_api_key_here\</code\>\</pre\>
+                <p style="color: #c0c0d0; margin-top: 1rem;">Atau menggunakan query parameter:</p>
+                <pre><code>https://hamzz-cloud.vercel.app/api/upload\?api_key\=hk_your_api_key_here\</code\>\</pre\>
             </div>
         </div>
 
-        <h2 style="margin-bottom: 1rem;">Endpoints</h2>
+        <h2 style="color: white; margin: 2rem 0 1rem;">Endpoints</h2>
 
-        <!-- Upload File -->
+        <!-- POST /upload -->
         <div class="endpoint">
             <div class="endpoint-header">
                 <span class="method post">POST</span>
                 <span class="path">/upload</span>
             </div>
             <div class="endpoint-body">
-                <p>Upload file ke cloud storage Hamzz.</p>
+                <p style="color: #c0c0d0;">Upload file ke cloud storage Hamzz Cloud.</p>
                 
-                <h4>Parameters (multipart/form-data)</h4>
+                <h4>📋 Parameters (multipart/form-data)</h4>
                 <table>
                     <tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
                     <tr><td>file</td><td>File</td><td>Yes</td><td>File yang akan diupload (max 50MB)</td></tr>
                     <tr><td>expiry</td><td>String</td><td>No</td><td>5m, 1d, 7d, 30d, never (default: never)</td></tr>
                 </table>
 
-                <h4>Example Request (cURL)</h4>
+                <h4>📝 Example Request (cURL)</h4>
                 <pre><code>curl -X POST https://hamzz-cloud.vercel.app/api/upload \
   -H "x-api-key: hk_xxx" \
   -F "file=@/path/to/image.png" \
   -F "expiry=7d"</code></pre>
 
-                <h4>Example Response</h4>
+                <h4>✅ Example Response</h4>
                 <div class="response-example">
                     <pre><code>{
   "success": true,
@@ -236,69 +296,38 @@
             </div>
         </div>
 
-        <!-- Get File -->
+        <!-- GET /file/:id -->
         <div class="endpoint">
             <div class="endpoint-header">
                 <span class="method get">GET</span>
                 <span class="path">/file/:id</span>
             </div>
             <div class="endpoint-body">
-                <p>Mengambil file berdasarkan ID. Endpoint ini bersifat public.</p>
-                
-                <h4>Example Request</h4>
+                <p style="color: #c0c0d0;">Mengambil file berdasarkan ID. Endpoint ini bersifat public.</p>
+                <h4>📝 Example Request</h4>
                 <pre><code>GET https://hamzz-cloud.vercel.app/api/file/67a3f2b8c4d5e6f7a8b9c0d1\</code\>\</pre\>
-
-                <h4>Response</h4>
-                <p>Returns the file content with appropriate Content-Type header.</p>
+                <p style="color: #c0c0d0;">Response: Returns the file content with appropriate Content-Type header.</p>
             </div>
         </div>
 
-        <!-- Get File Info -->
-        <div class="endpoint">
-            <div class="endpoint-header">
-                <span class="method get">GET</span>
-                <span class="path">/info/:id</span>
-            </div>
-            <div class="endpoint-body">
-                <p>Mendapatkan metadata file tanpa mendownload konten.</p>
-                
-                <h4>Example Response</h4>
-                <div class="response-example">
-                    <pre><code>{
-  "filename": "image.png",
-  "size": 1024000,
-  "type": "image/png",
-  "uploadedAt": "2024-01-15T10:30:00.000Z",
-  "expiryOption": "7d",
-  "expiredAt": "2024-01-22T10:30:00.000Z",
-  "status": "active"
-}</code></pre>
-                </div>
-            </div>
-        </div>
-
-        <!-- List Files -->
+        <!-- GET /files -->
         <div class="endpoint">
             <div class="endpoint-header">
                 <span class="method get">GET</span>
                 <span class="path">/files</span>
             </div>
             <div class="endpoint-body">
-                <p>Mendapatkan daftar semua file yang diupload menggunakan API key yang sama (memerlukan autentikasi).</p>
-                
-                <h4>Example Request</h4>
+                <p style="color: #c0c0d0;">Mendapatkan daftar semua file yang diupload menggunakan API key yang sama.</p>
+                <h4>📝 Example Request</h4>
                 <pre><code>curl -X GET https://hamzz-cloud.vercel.app/api/files \
   -H "x-api-key: hk_xxx"</code></pre>
             </div>
         </div>
 
-        <h2 style="margin-bottom: 1rem; margin-top: 2rem;">Integration Examples</h2>
+        <h2 style="color: white; margin: 2rem 0 1rem;">Integration Examples</h2>
 
-        <!-- Node.js -->
         <div class="endpoint">
-            <div class="endpoint-header">
-                <span class="path">Node.js / JavaScript</span>
-            </div>
+            <div class="endpoint-header"><span class="path">Node.js / JavaScript</span></div>
             <div class="endpoint-body">
                 <pre><code>import fs from 'fs';
 import FormData from 'form-data';
@@ -319,11 +348,8 @@ console.log('Uploaded URL:', data.fullUrl);</code></pre>
             </div>
         </div>
 
-        <!-- Python -->
         <div class="endpoint">
-            <div class="endpoint-header">
-                <span class="path">Python</span>
-            </div>
+            <div class="endpoint-header"><span class="path">Python</span></div>
             <div class="endpoint-body">
                 <pre><code>import requests
 
@@ -340,14 +366,10 @@ print(response.json()["fullUrl"])</code></pre>
             </div>
         </div>
 
-        <!-- WhatsApp Bot -->
         <div class="endpoint">
-            <div class="endpoint-header">
-                <span class="path">WhatsApp Bot (Baileys)</span>
-            </div>
+            <div class="endpoint-header"><span class="path">WhatsApp Bot (Baileys)</span></div>
             <div class="endpoint-body">
-                <pre><code>// Handle incoming media message
-async function handleMediaMessage(msg) {
+                <pre><code>async function handleMediaMessage(msg) {
   const media = await msg.downloadMedia();
   const formData = new FormData();
   formData.append('file', Buffer.from(media.data, 'base64'), media.filename);
@@ -362,10 +384,6 @@ async function handleMediaMessage(msg) {
   await msg.reply(`✅ File uploaded!\n🔗 ${result.fullUrl}`);
 }</code></pre>
             </div>
-        </div>
-
-        <div class="try-it" style="text-align: center;">
-            <p>Butuh API Key? <a href="/login" style="color: #667eea;">Login atau Register</a> untuk mendapatkan API key gratis (20 request/hari).</p>
         </div>
     </div>
 </body>
