@@ -20,6 +20,10 @@
       "dest": "/index.html"
     },
     {
+      "src": "/upload",
+      "dest": "/upload.html"
+    },
+    {
       "src": "/docs",
       "dest": "/docs.html"
     },
@@ -34,6 +38,10 @@
     {
       "src": "/dashboard",
       "dest": "/dashboard.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
