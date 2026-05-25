@@ -25,7 +25,6 @@
             background: radial-gradient(ellipse at 20% 30%, #667eea15, #0f0f1a);
         }
 
-        /* Navbar */
         .navbar {
             position: sticky;
             top: 0;
@@ -41,16 +40,9 @@
             gap: 1rem;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
-        }
-
+        .logo { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
         .logo-icon {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             background: linear-gradient(135deg, #667eea, #764ba2);
             border-radius: 12px;
             display: flex;
@@ -58,7 +50,6 @@
             justify-content: center;
             font-size: 1.25rem;
         }
-
         .logo h1 {
             font-size: 1.5rem;
             background: linear-gradient(135deg, #667eea, #764ba2);
@@ -66,23 +57,9 @@
             -webkit-text-fill-color: transparent;
             font-weight: 700;
         }
-
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #a0a0b0;
-            transition: color 0.2s;
-            font-weight: 500;
-        }
-
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+        .nav-links a { text-decoration: none; color: #a0a0b0; transition: color 0.2s; font-weight: 500; }
         .nav-links a:hover { color: #667eea; }
-
         .user-info {
             display: flex;
             align-items: center;
@@ -91,10 +68,8 @@
             padding: 0.5rem 1rem;
             border-radius: 40px;
         }
-
         .user-avatar {
-            width: 32px;
-            height: 32px;
+            width: 32px; height: 32px;
             background: linear-gradient(135deg, #667eea, #764ba2);
             border-radius: 50%;
             display: flex;
@@ -102,26 +77,15 @@
             justify-content: center;
             font-size: 0.875rem;
         }
-
-        .logout-btn {
-            background: none;
-            border: none;
-            color: #ef4444;
-            cursor: pointer;
-            font-size: 0.875rem;
-        }
-
-        /* Container */
+        .logout-btn { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 0.875rem; }
         .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
 
-        /* Stats Cards */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
-
         .stat-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -129,28 +93,11 @@
             border-radius: 24px;
             padding: 1.5rem;
             transition: all 0.3s;
-            animation: fadeInUp 0.5s ease;
         }
+        .stat-card:hover { transform: translateY(-5px); border-color: rgba(102, 126, 234, 0.5); }
+        .stat-card h3 { color: #a0a0b0; font-size: 0.875rem; margin-bottom: 0.5rem; }
+        .stat-value { font-size: 2.5rem; font-weight: 700; color: white; }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(102, 126, 234, 0.5);
-        }
-
-        .stat-card h3 {
-            color: #a0a0b0;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: white;
-        }
-
-        /* Upload Card */
         .upload-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -158,9 +105,7 @@
             border-radius: 24px;
             padding: 1.5rem;
             margin-bottom: 2rem;
-            animation: fadeInUp 0.5s ease 0.1s both;
         }
-
         .upload-area {
             border: 2px dashed rgba(102, 126, 234, 0.4);
             border-radius: 20px;
@@ -168,32 +113,11 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            background: rgba(0, 0, 0, 0.2);
         }
-
-        .upload-area.drag-over {
-            border-color: #667eea;
-            background: rgba(102, 126, 234, 0.1);
-            transform: scale(1.01);
-        }
-
-        .expiry-section {
-            margin: 1.5rem 0;
-        }
-
-        .expiry-label {
-            color: #c0c0d0;
-            font-size: 0.875rem;
-            margin-bottom: 0.75rem;
-            display: block;
-        }
-
-        .expiry-options {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
+        .upload-area.drag-over { border-color: #667eea; background: rgba(102, 126, 234, 0.1); transform: scale(1.01); }
+        .expiry-section { margin: 1.5rem 0; }
+        .expiry-label { color: #c0c0d0; font-size: 0.875rem; margin-bottom: 0.75rem; display: block; }
+        .expiry-options { display: flex; gap: 0.75rem; flex-wrap: wrap; }
         .expiry-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -203,13 +127,7 @@
             cursor: pointer;
             transition: all 0.2s;
         }
-
-        .expiry-btn.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-color: transparent;
-            color: white;
-        }
-
+        .expiry-btn.active { background: linear-gradient(135deg, #667eea, #764ba2); border-color: transparent; color: white; }
         .upload-submit-btn {
             width: 100%;
             background: linear-gradient(135deg, #667eea, #764ba2);
@@ -221,24 +139,33 @@
             cursor: pointer;
             transition: all 0.3s;
         }
+        .upload-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3); }
 
-        .upload-submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        /* Animated Cloud Loading */
+        .cloud-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
         }
-
-        .progress-container {
-            margin-top: 1rem;
-            display: none;
+        .cloud-icon {
+            font-size: 2rem;
+            animation: cloudFloat 1s ease-in-out infinite;
         }
+        @keyframes cloudFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .loading-text { color: #a0a0b0; font-size: 0.875rem; }
 
+        .progress-container { margin-top: 1rem; display: none; }
         .progress-bar-wrapper {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 40px;
             height: 8px;
             overflow: hidden;
         }
-
         .progress-fill {
             background: linear-gradient(90deg, #667eea, #764ba2);
             height: 100%;
@@ -247,7 +174,39 @@
             transition: width 0.3s;
         }
 
-        /* API Keys Section */
+        /* URL Result Card */
+        .url-result {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 16px;
+            padding: 1rem;
+            margin: 1rem 0;
+            display: none;
+        }
+        .url-result.show { display: block; animation: fadeInUp 0.3s ease; }
+        .url-label { color: #10b981; font-size: 0.75rem; margin-bottom: 0.25rem; }
+        .url-link {
+            color: white;
+            text-decoration: none;
+            font-family: monospace;
+            font-size: 0.875rem;
+            word-break: break-all;
+            background: rgba(0,0,0,0.3);
+            padding: 0.5rem;
+            border-radius: 8px;
+            display: block;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+
         .api-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -255,9 +214,7 @@
             border-radius: 24px;
             margin-bottom: 2rem;
             overflow: hidden;
-            animation: fadeInUp 0.5s ease 0.2s both;
         }
-
         .api-header {
             padding: 1.5rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -267,9 +224,7 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
-
         .api-header h3 { color: white; }
-
         .create-key-btn {
             background: linear-gradient(135deg, #10b981, #059669);
             border: none;
@@ -278,7 +233,6 @@
             color: white;
             cursor: pointer;
         }
-
         .api-key-item {
             padding: 1rem 1.5rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -288,34 +242,29 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
-
         .api-key-code {
             font-family: monospace;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0,0,0,0.3);
             padding: 0.25rem 0.5rem;
             border-radius: 8px;
             font-size: 0.75rem;
         }
-
         .delete-key {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            background: rgba(239,68,68,0.2);
+            border: 1px solid rgba(239,68,68,0.3);
             padding: 0.25rem 0.75rem;
             border-radius: 40px;
             color: #ef4444;
             cursor: pointer;
         }
 
-        /* Files Table */
         .files-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
             overflow: hidden;
-            animation: fadeInUp 0.5s ease 0.3s both;
         }
-
         .files-header {
             padding: 1.5rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -325,38 +274,49 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
-
         .files-header h3 { color: white; }
-
+        .refresh-btn {
+            background: rgba(59,130,246,0.2);
+            border: 1px solid rgba(59,130,246,0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            color: #3b82f6;
+            cursor: pointer;
+        }
+        .file-table {
+            width: 100%;
+            overflow-x: auto;
+        }
         .file-row {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 0.5fr;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
             padding: 1rem 1.5rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             align-items: center;
-            transition: background 0.2s;
+            gap: 1rem;
         }
-
-        .file-row:hover {
-            background: rgba(255, 255, 255, 0.03);
-        }
-
         .file-header-row {
             color: #a0a0b0;
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
         }
+        .file-name { color: white; font-weight: 500; word-break: break-word; }
+        .file-url-input {
+            font-size: 0.7rem;
+            background: rgba(0,0,0,0.3);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-family: monospace;
+            color: #a0a0b0;
+        }
 
-        .file-name { color: white; font-weight: 500; }
-
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
             background: #1e1e2a;
-            border: 1px solid rgba(102, 126, 234, 0.3);
+            border: 1px solid rgba(102,126,234,0.3);
             padding: 1rem 1.5rem;
             border-radius: 16px;
             color: white;
@@ -365,10 +325,11 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            max-width: 400px;
         }
-
-        .toast.success { border-color: #10b981; background: rgba(16, 185, 129, 0.1); }
-        .toast.error { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+        .toast.success { border-color: #10b981; background: rgba(16,185,129,0.1); }
+        .toast.error { border-color: #ef4444; background: rgba(239,68,68,0.1); }
+        .toast-url { font-family: monospace; font-size: 0.7rem; word-break: break-all; margin-top: 0.25rem; }
 
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -379,25 +340,11 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .loading-spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-top-color: #667eea;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            display: inline-block;
-        }
-
         @media (max-width: 768px) {
             .navbar { padding: 1rem; }
             .container { padding: 1rem; }
-            .file-row { grid-template-columns: 1fr 0.5fr 0.5fr 0.5fr; font-size: 0.75rem; }
+            .file-row { grid-template-columns: 1fr; gap: 0.5rem; }
+            .file-header-row { display: none; }
         }
     </style>
 </head>
@@ -414,7 +361,7 @@
             <a href="/docs">Docs</a>
             <a href="/pricing">Pricing</a>
             <div class="user-info">
-                <div class="user-avatar" id="userAvatar">👤</div>
+                <div class="user-avatar">👤</div>
                 <span id="userName" style="color:white;"></span>
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
@@ -430,8 +377,9 @@
 
         <div class="upload-card">
             <div class="upload-area" id="uploadArea">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">📤</div>
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">☁️</div>
                 <p style="color: white;">Drag & drop or click to browse</p>
+                <p style="color: #a0a0b0; font-size: 0.75rem;">Max 50MB per file</p>
                 <input type="file" id="fileInput" multiple style="display: none;">
             </div>
             <div class="expiry-section">
@@ -444,10 +392,23 @@
                     <button class="expiry-btn active" data-expiry="never">Never</button>
                 </div>
             </div>
-            <button class="upload-submit-btn" id="uploadBtn">Upload to Cloud</button>
+            <button class="upload-submit-btn" id="uploadBtn">☁️ Upload to Cloud</button>
+            
             <div class="progress-container" id="progressContainer">
+                <div class="cloud-loading" id="cloudLoading">
+                    <div class="cloud-icon">☁️</div>
+                    <div class="loading-text">Uploading to cloud...</div>
+                </div>
                 <div class="progress-bar-wrapper"><div class="progress-fill" id="progressFill"></div></div>
                 <p style="color: #a0a0b0; font-size: 0.75rem; text-align: center; margin-top: 0.5rem;" id="progressText">0%</p>
+            </div>
+
+            <div class="url-result" id="urlResult">
+                <div class="url-label">✅ File uploaded successfully!</div>
+                <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                    <code class="url-link" id="uploadedUrl"></code>
+                    <button class="copy-btn" onclick="copyUrl()">Copy URL</button>
+                </div>
             </div>
         </div>
 
@@ -457,9 +418,16 @@
         </div>
 
         <div class="files-card">
-            <div class="files-header"><h3>📁 My Files</h3><button class="create-key-btn" onclick="loadFiles()" style="background:#3b82f6;">⟳ Refresh</button></div>
-            <div class="file-row file-header-row"><div>File Name</div><div>Size</div><div>Status</div><div>Action</div></div>
-            <div id="filesList"><div class="file-row">Loading...</div></div>
+            <div class="files-header"><h3>📁 My Files</h3><button class="refresh-btn" onclick="loadFiles()">⟳ Refresh</button></div>
+            <div class="file-table">
+                <div class="file-row file-header-row">
+                    <div>File Name</div>
+                    <div>Size</div>
+                    <div>Status</div>
+                    <div>Link</div>
+                </div>
+                <div id="filesList"><div class="file-row">Loading...</div></div>
+            </div>
         </div>
     </div>
 
@@ -469,13 +437,25 @@
 
         let selectedFiles = [];
         let currentExpiry = 'never';
+        let lastUploadedUrl = '';
 
-        function showToast(message, type = 'success') {
+        function showToast(message, type = 'success', url = '') {
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
-            toast.innerHTML = `<span>${type === 'success' ? '✅' : '❌'}</span><span>${message}</span>`;
+            if (url) {
+                toast.innerHTML = `<span>${type === 'success' ? '✅' : '❌'}</span><div><div>${message}</div><div class="toast-url">🔗 ${url.substring(0, 60)}${url.length > 60 ? '...' : ''}</div></div>`;
+            } else {
+                toast.innerHTML = `<span>${type === 'success' ? '✅' : '❌'}</span><span>${message}</span>`;
+            }
             document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
+            setTimeout(() => toast.remove(), 5000);
+        }
+
+        function copyUrl() {
+            if (lastUploadedUrl) {
+                navigator.clipboard.writeText(lastUploadedUrl);
+                showToast('URL copied to clipboard!', 'success');
+            }
         }
 
         async function apiCall(endpoint, options = {}) {
@@ -536,12 +516,13 @@
                 container.innerHTML = files.map(file => {
                     totalBytes += file.size;
                     const isExpired = file.expiredAt && new Date(file.expiredAt) < new Date();
-                    return `
+                    const fileUrl = `${window.location.origin}/api/file/${file._id}`;
+  return `
                         <div class="file-row">
-                            <div class="file-name">${escapeHtml(file.originalName)}</div>
+                            <div class="file-name" title="${escapeHtml(file.originalName)}">${escapeHtml(file.originalName).substring(0, 40)}${escapeHtml(file.originalName).length > 40 ? '...' : ''}</div>
                             <div>${(file.size/1024/1024).toFixed(2)} MB</div>
                             <div>${isExpired ? '<span style="color:#ef4444;">Expired</span>' : '<span style="color:#10b981;">Active</span>'}</div>
-                            <div>${!isExpired ? `<a href="/api/file/${file._id}" target="_blank" style="color:#667eea;">Download</a>` : '-'}</div>
+                            <div>${!isExpired ? `<a href="/api/file/${file._id}" target="_blank" style="color:#667eea; font-size:0.75rem;">🔗 Link</a>` : '-'}</div>
                         </div>
                     `;
                 }).join('');
@@ -549,7 +530,6 @@
             } catch(e) { showToast('Failed to load files', 'error'); }
         }
 
-        // Upload logic
         document.querySelectorAll('.expiry-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.expiry-btn').forEach(b => b.classList.remove('active'));
@@ -564,6 +544,8 @@
         const progressContainer = document.getElementById('progressContainer');
         const progressFill = document.getElementById('progressFill');
         const progressText = document.getElementById('progressText');
+        const urlResult = document.getElementById('urlResult');
+        const uploadedUrlSpan = document.getElementById('uploadedUrl');
 
         uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('drag-over'); });
         uploadArea.addEventListener('dragleave', () => { uploadArea.classList.remove('drag-over'); });
@@ -588,6 +570,7 @@
 
             uploadBtn.disabled = true;
             progressContainer.style.display = 'block';
+            urlResult.classList.remove('show');
 
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
@@ -605,8 +588,17 @@
                         }
                     });
                     xhr.onload = () => {
-                        if (xhr.status === 200) { showToast(`✓ ${file.name} uploaded`, 'success'); resolve(); }
-                        else reject();
+                        if (xhr.status === 200) {
+                            const response = JSON.parse(xhr.responseText);
+                            const fullUrl = response.fullUrl || `${window.location.origin}/api/file/${response.fileId}`;
+                            lastUploadedUrl = fullUrl;
+                            uploadedUrlSpan.textContent = fullUrl;
+                            urlResult.classList.add('show');
+                            showToast(`✓ ${file.name} uploaded!`, 'success', fullUrl);
+                            resolve();
+                        } else {
+                            reject();
+                        }
                     };
                     xhr.onerror = () => reject();
                     xhr.open('POST', '/api/upload');
@@ -618,9 +610,9 @@
             uploadBtn.disabled = false;
             progressContainer.style.display = 'none';
             progressFill.style.width = '0%';
+            progressText.textContent = '0%';
             selectedFiles = [];
             loadFiles();
-            showToast('All files uploaded!', 'success');
         }
 
         function escapeHtml(str) { return str.replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'); }
