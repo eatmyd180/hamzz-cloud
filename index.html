@@ -3,35 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamzz Cloud - Enterprise Media Management</title>
+    <title>Hamzz Cloud - Professional Media Uploader</title>
     <style>
-        :root {
-            --primary: #0f172a;
-            --primary-dark: #0a0f1c;
-            --secondary: #3b82f6;
-            --secondary-hover: #2563eb;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --gray-50: #f8fafc;
-            --gray-100: #f1f5f9;
-            --gray-200: #e2e8f0;
-            --gray-300: #cbd5e1;
-            --gray-400: #94a3b8;
-            --gray-500: #64748b;
-            --gray-600: #475569;
-            --gray-700: #334155;
-            --gray-800: #1e293b;
-            --gray-900: #0f172a;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-            --radius-sm: 0.375rem;
-            --radius-md: 0.5rem;
-            --radius-lg: 0.75rem;
-            --radius-xl: 1rem;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap');
 
         * {
             margin: 0;
@@ -40,15 +14,63 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #0f0f1a;
             min-height: 100vh;
-            padding: 2rem;
         }
 
-        .header {
-            max-width: 1400px;
-            margin: 0 auto 2rem;
+        /* Animated Background */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 20% 30%, #667eea20, #0f0f1a);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .bg-gradient::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 70% 60%, #764ba220, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Glassmorphism Navbar */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 15, 26, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -56,93 +78,163 @@
             gap: 1rem;
         }
 
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
         .logo h1 {
-            color: white;
-            font-size: 1.75rem;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-weight: 700;
-            letter-spacing: -0.02em;
         }
 
-        .logo p {
-            color: rgba(255,255,255,0.8);
-            font-size: 0.875rem;
-        }
-
-        .stats {
+        .nav-links {
             display: flex;
             gap: 1.5rem;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius-lg);
+            align-items: center;
+            flex-wrap: wrap;
         }
 
-        .stat-item {
-            text-align: center;
+        .nav-links a {
+            text-decoration: none;
+            color: #a0a0b0;
+            transition: color 0.2s;
+            font-weight: 500;
         }
 
-        .stat-value {
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .btn-glass {
+            background: rgba(102, 126, 234, 0.15);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            padding: 0.5rem 1.25rem;
+            border-radius: 40px;
             color: white;
-            font-size: 1.5rem;
-            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
         }
 
-        .stat-label {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.75rem;
+        .btn-glass:hover {
+            background: rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            padding: 0.75rem 1.75rem;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
+            padding: 2rem;
         }
 
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem 4rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #a0a0c0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .hero p {
+            color: #a0a0b0;
+            font-size: 1.125rem;
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Upload Card */
         .upload-card {
-            background: white;
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-xl);
-            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px;
+            padding: 2rem;
             margin-bottom: 2rem;
+            transition: all 0.3s;
         }
 
-        .upload-header {
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid var(--gray-200);
-            background: var(--gray-50);
-        }
-
-        .upload-header h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-
-        .upload-header p {
-            font-size: 0.875rem;
-            color: var(--gray-500);
-            margin-top: 0.25rem;
+        .upload-card:hover {
+            border-color: rgba(102, 126, 234, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .upload-area {
-            padding: 3rem 2rem;
+            border: 2px dashed rgba(102, 126, 234, 0.4);
+            border-radius: 24px;
+            padding: 3rem;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
-            border: 2px dashed var(--gray-300);
-            margin: 1.5rem;
-            border-radius: var(--radius-lg);
-            background: var(--gray-50);
+            transition: all 0.3s;
+            background: rgba(0, 0, 0, 0.2);
         }
 
         .upload-area.drag-over {
-            border-color: var(--secondary);
-            background: #eff6ff;
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            transform: scale(1.01);
         }
 
         .upload-icon {
             width: 80px;
             height: 80px;
-            background: var(--gray-200);
+            background: linear-gradient(135deg, #667eea20, #764ba220);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -152,48 +244,18 @@
         }
 
         .upload-area h3 {
-            font-size: 1.25rem;
-            font-weight: 500;
-            color: var(--gray-700);
+            color: white;
             margin-bottom: 0.5rem;
         }
 
-        .upload-area p {
-            color: var(--gray-500);
-            font-size: 0.875rem;
-        }
-
-        .file-types {
-            margin-top: 1rem;
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .file-badge {
-            background: var(--gray-200);
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            color: var(--gray-600);
-        }
-
-        #fileInput {
-            display: none;
-        }
-
-        /* Expiry Options */
         .expiry-section {
-            padding: 0 1.5rem;
-            margin-bottom: 1rem;
+            margin: 1.5rem 0;
         }
 
         .expiry-label {
+            color: #c0c0d0;
             font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--gray-700);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             display: block;
         }
 
@@ -203,135 +265,33 @@
             flex-wrap: wrap;
         }
 
-        .expiry-option {
-            position: relative;
-        }
-
-        .expiry-option input {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .expiry-option label {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: var(--gray-100);
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius-md);
-            font-size: 0.875rem;
+        .expiry-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1.25rem;
+            border-radius: 40px;
+            color: #c0c0d0;
             cursor: pointer;
             transition: all 0.2s;
-        }
-
-        .expiry-option input:checked + label {
-            background: var(--secondary);
-            border-color: var(--secondary);
-            color: white;
-        }
-
-        .expiry-option label:hover {
-            background: var(--gray-200);
-        }
-
-        .selected-files {
-            padding: 0 1.5rem 1.5rem;
-        }
-
-        .selected-files h4 {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--gray-700);
-            margin-bottom: 0.75rem;
-        }
-
-        .file-preview-list {
-            background: var(--gray-50);
-            border-radius: var(--radius-md);
-            padding: 1rem;
-            margin-bottom: 1rem;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .file-preview-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem;
-            border-bottom: 1px solid var(--gray-200);
             font-size: 0.875rem;
         }
 
-        .file-preview-item:last-child {
-            border-bottom: none;
-        }
-
-        .upload-btn {
-            width: 100%;
+        .expiry-btn.active {
             background: linear-gradient(135deg, #667eea, #764ba2);
+            border-color: transparent;
             color: white;
-            border: none;
-            padding: 1rem;
-            border-radius: var(--radius-md);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .upload-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-lg);
+        .file-list-container {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
         }
 
-        .upload-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .progress-wrapper {
+        .file-header {
             padding: 1.5rem;
-            background: var(--gray-50);
-            margin: 0 1.5rem 1.5rem;
-            border-radius: var(--radius-lg);
-        }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-            color: var(--gray-600);
-        }
-
-        .progress-bar {
-            height: 8px;
-            background: var(--gray-200);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 4px;
-            transition: width 0.3s;
-            width: 0%;
-        }
-
-        .files-card {
-            background: white;
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-xl);
-            overflow: hidden;
-        }
-
-        .files-header {
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid var(--gray-200);
-            background: var(--gray-50);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -339,106 +299,100 @@
             gap: 1rem;
         }
 
-        .files-header h2 {
+        .file-header h3 {
+            color: white;
             font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-
-        .refresh-btn {
-            background: var(--gray-200);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            font-size: 0.875rem;
         }
 
         .file-table {
-            overflow-x: auto;
-        }
-
-        table {
             width: 100%;
-            border-collapse: collapse;
         }
 
-        th {
-            text-align: left;
+        .file-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
             padding: 1rem 1.5rem;
-            background: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .file-row:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .file-header-row {
+            color: #a0a0b0;
+            font-size: 0.75rem;
             font-weight: 600;
-            color: var(--gray-600);
-            font-size: 0.875rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        td {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--gray-200);
-            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .file-name {
+            color: white;
             font-weight: 500;
-            color: var(--gray-900);
         }
 
         .file-size {
-            color: var(--gray-500);
-            font-size: 0.75rem;
-        }
-
-        .expiry-badge {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: 500;
-        }
-
-        .expiry-badge.active {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .expiry-badge.expired {
-            background: #fee2e2;
-            color: #991b1b;
+            color: #a0a0b0;
+            font-size: 0.875rem;
         }
 
         .file-link {
-            background: var(--secondary);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: var(--radius-sm);
+            color: #667eea;
             text-decoration: none;
-            font-size: 0.75rem;
+            font-size: 0.875rem;
         }
 
         .empty-state {
             text-align: center;
             padding: 3rem;
-            color: var(--gray-400);
+            color: #a0a0b0;
+        }
+
+        .progress-container {
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .progress-bar-wrapper {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 40px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            width: 0%;
+            border-radius: 40px;
+            transition: width 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
         .toast {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            background: var(--gray-900);
+            background: #1e1e2a;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
             color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius-md);
-            font-size: 0.875rem;
             z-index: 1000;
-            animation: slideIn 0.3s ease;
+            animation: slideInRight 0.3s ease;
         }
 
-        .toast.success { background: var(--success); }
-        .toast.error { background: var(--danger); }
+        .toast.success {
+            border-color: #10b981;
+        }
 
-        @keyframes slideIn {
+        .toast.error {
+            border-color: #ef4444;
+        }
+
+        @keyframes slideInRight {
             from {
                 transform: translateX(100%);
                 opacity: 0;
@@ -450,129 +404,101 @@
         }
 
         @media (max-width: 768px) {
-            body { padding: 1rem; }
-            .upload-header, .files-header { padding: 1rem; }
-            th, td { padding: 0.75rem 1rem; }
-            .stats { display: none; }
+            .navbar { padding: 1rem; }
+            .nav-links { gap: 1rem; }
+            .hero h1 { font-size: 2rem; }
+            .file-row { grid-template-columns: 1fr 0.5fr 0.5fr 0.5fr 0.5fr; font-size: 0.75rem; }
+            .container { padding: 1rem; }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="logo">
+    <div class="bg-gradient"></div>
+
+    <nav class="navbar">
+        <div class="logo" onclick="window.location.href='/'">
+            <div class="logo-icon">☁️</div>
             <h1>Hamzz Cloud</h1>
-            <p>Enterprise Media Management Platform</p>
         </div>
-        <div class="stats" id="statsPanel">
-            <div class="stat-item">
-                <div class="stat-value" id="totalFiles">0</div>
-                <div class="stat-label">Total Files</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value" id="totalSize">0 MB</div>
-                <div class="stat-label">Storage Used</div>
-            </div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/docs">Docs</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/login" class="btn-glass">Sign In</a>
+            <a href="/dashboard" class="btn-primary" style="padding: 0.5rem 1.25rem;">Dashboard</a>
         </div>
-    </div>
+    </nav>
 
     <div class="container">
+        <div class="hero">
+            <h1>Secure File Uploading<br>Made Simple</h1>
+            <p>Upload, share, and manage your files with enterprise-grade security</p>
+        </div>
+
         <div class="upload-card">
-            <div class="upload-header">
-                <h2>Upload Media</h2>
-                <p>Support untuk images, videos, audio, documents, dan archives</p>
-            </div>
             <div class="upload-area" id="uploadArea">
                 <div class="upload-icon">📤</div>
                 <h3>Drop files here or click to browse</h3>
-                <p>Maximum file size: 50MB per file</p>
-                <div class="file-types">
-                    <span class="file-badge">Images</span>
-                    <span class="file-badge">Videos</span>
-                    <span class="file-badge">Audios</span>
-                    <span class="file-badge">Documents</span>
-                    <span class="file-badge">Archives</span>
-                </div>
-                <input type="file" id="fileInput" multiple>
+                <p style="color: #a0a0b0; margin-top: 0.5rem;">Maximum file size: 50MB</p>
+                <input type="file" id="fileInput" multiple style="display: none;">
             </div>
 
-            <!-- Expiry Options -->
             <div class="expiry-section">
-                <div class="expiry-label">⏱️ Link Expiry Time</div>
-                <div class="expiry-options">
-                    <div class="expiry-option">
-                        <input type="radio" name="expiry" id="expiry5m" value="5m">
-                        <label for="expiry5m">5 Menit</label>
-                    </div>
-                    <div class="expiry-option">
-                        <input type="radio" name="expiry" id="expiry1d" value="1d">
-                        <label for="expiry1d">1 Hari</label>
-                    </div>
-                    <div class="expiry-option">
-                        <input type="radio" name="expiry" id="expiry7d" value="7d">
-                        <label for="expiry7d">7 Hari</label>
-                    </div>
-                    <div class="expiry-option">
-                        <input type="radio" name="expiry" id="expiry30d" value="30d">
-                        <label for="expiry30d">30 Hari</label>
-                    </div>
-                    <div class="expiry-option">
-                        <input type="radio" name="expiry" id="expiryNever" value="never" checked>
-                        <label for="expiryNever">Never Expire</label>
-                    </div>
+                <span class="expiry-label">⏱️ Link Expiry Time</span>
+                <div class="expiry-options" id="expiryOptions">
+                    <button class="expiry-btn" data-expiry="5m">5 Minutes</button>
+                    <button class="expiry-btn" data-expiry="1d">1 Day</button>
+                    <button class="expiry-btn" data-expiry="7d">7 Days</button>
+                    <button class="expiry-btn" data-expiry="30d">30 Days</button>
+                    <button class="expiry-btn active" data-expiry="never">Never Expire</button>
                 </div>
             </div>
 
-            <div class="selected-files" id="selectedFilesPanel" style="display:none;">
-                <h4>Selected Files</h4>
-                <div class="file-preview-list" id="filePreviewList"></div>
-                <button class="upload-btn" id="uploadBtn">Upload to Cloud</button>
-            </div>
-            <div class="progress-wrapper" id="progressWrapper" style="display:none;">
-                <div class="progress-header">
-                    <span>Uploading to secure storage...</span>
-                    <span id="progressPercent">0%</span>
-                </div>
-                <div class="progress-bar">
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar-wrapper">
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
+                <p style="color: #a0a0b0; font-size: 0.75rem; margin-top: 0.5rem; text-align: center;" id="progressText">0%</p>
             </div>
         </div>
 
-        <div class="files-card">
-            <div class="files-header">
-                <h2>Media Library</h2>
-                <button class="refresh-btn" onclick="loadFileList()">⟳ Refresh</button>
+        <div class="file-list-container">
+            <div class="file-header">
+                <h3>Media Library</h3>
+                <button class="btn-glass" onclick="loadFileList()" style="padding: 0.5rem 1rem;">⟳ Refresh</button>
             </div>
             <div class="file-table">
-                <table>
-                    <thead>
-                        <tr><th>File Name</th><th>Size</th><th>Type</th><th>Expiry</th><th>Status</th><th>Action</th></tr>
-                    </thead>
-                    <tbody id="fileListBody">
-                        <tr><td colspan="6" class="empty-state">Loading media library...</td></tr>
-                    </tbody>
-                </table>
+                <div class="file-row file-header-row">
+                    <div>File Name</div>
+                    <div>Size</div>
+                    <div>Expiry</div>
+                    <div>Status</div>
+                    <div>Action</div>
+                </div>
+                <div id="fileListContainer">
+                    <div class="empty-state">Loading your files...</div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         let selectedFiles = [];
+        let currentExpiry = 'never';
+
+        document.querySelectorAll('.expiry-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.expiry-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentExpiry = btn.dataset.expiry;
+            });
+        });
 
         const uploadArea = document.getElementById('uploadArea');
         const fileInput = document.getElementById('fileInput');
-        const selectedFilesPanel = document.getElementById('selectedFilesPanel');
-        const filePreviewList = document.getElementById('filePreviewList');
-        const uploadBtn = document.getElementById('uploadBtn');
-        const progressWrapper = document.getElementById('progressWrapper');
+        const progressContainer = document.getElementById('progressContainer');
         const progressFill = document.getElementById('progressFill');
-        const progressPercent = document.getElementById('progressPercent');
-        const fileListBody = document.getElementById('fileListBody');
-
-        function getSelectedExpiry() {
-            const selected = document.querySelector('input[name="expiry"]:checked');
-            return selected ? selected.value : 'never';
-        }
+        const progressText = document.getElementById('progressText');
 
         uploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -599,118 +525,134 @@
 
         function handleFiles(files) {
             selectedFiles = files.filter(f => f.size <= 50 * 1024 * 1024);
-            const invalidFiles = files.filter(f => f.size > 50 * 1024 * 1024);
-            
-            if (invalidFiles.length) {
-                showToast(`${invalidFiles.length} file(s) melebihi 50MB`, 'error');
+            if (selectedFiles.length === 0) {
+                showToast('Some files exceed 50MB limit', 'error');
+                return;
             }
-            
-            if (selectedFiles.length === 0) return;
-            
-            selectedFilesPanel.style.display = 'block';
-            filePreviewList.innerHTML = selectedFiles.map(file => `
-                <div class="file-preview-item">
-                    <span>📄 ${file.name}</span>
-                    <span style="color:#64748b; font-size:0.75rem;">${formatFileSize(file.size)}</span>
-                </div>
-            `).join('');
+            uploadFiles();
         }
 
-        uploadBtn.addEventListener('click', async () => {
-            if (selectedFiles.length === 0) return;
+        async function getApiKey() {
+            const token = localStorage.getItem('token');
+            if (!token) return null;
             
-            uploadBtn.disabled = true;
-            progressWrapper.style.display = 'block';
-            
-            const expiryValue = getSelectedExpiry();
-            
-            for (let i = 0; i < selectedFiles.length; i++) {
-                await uploadFile(selectedFiles[i], i, selectedFiles.length, expiryValue);
-            }
-            
-            uploadBtn.disabled = false;
-            selectedFilesPanel.style.display = 'none';
-            progressWrapper.style.display = 'none';
-            selectedFiles = [];
-            fileInput.value = '';
-            showToast('Upload completed successfully', 'success');
-            loadFileList();
-        });
-
-        async function uploadFile(file, index, total, expiry) {
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('expiry', expiry);
-            
-            return new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
-                
-                xhr.upload.addEventListener('progress', (e) => {
-                    if (e.lengthComputable) {
-                        const overall = ((index + (e.loaded / e.total)) / total) * 100;
-                        progressFill.style.width = `${overall}%`;
-                        progressPercent.textContent = `${Math.round(overall)}%`;
-                    }
+            try {
+                const res = await fetch('/api/keys', {
+                    headers: { 'Authorization': `Bearer ${token}` }
                 });
-                
-             
-                xhr.onload = () => {
-                    if (xhr.status === 200) {
-                        const response = JSON.parse(xhr.responseText);
-                        showToast(`Uploaded: ${file.name}\n${response.expiryMessage}`, 'success');
-                        resolve();
-                    } else {
-                        reject();
-                    }
-                };
-                
-                xhr.onerror = () => reject();
-                xhr.open('POST', '/api/upload');
-                xhr.send(formData);
-            });
+                const keys = await res.json();
+                return keys[0]?.apiKey || null;
+            } catch(e) {
+                return null;
+            }
+        }
+
+        async function uploadFiles() {
+            if (selectedFiles.length === 0) return;
+
+            const apiKey = await getApiKey();
+            if (!apiKey) {
+                showToast('Please login first to upload files', 'error');
+                setTimeout(() => window.location.href = '/login', 1500);
+                return;
+            }
+
+            progressContainer.style.display = 'block';
+
+            for (let i = 0; i < selectedFiles.length; i++) {
+                const file = selectedFiles[i];
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('expiry', currentExpiry);
+
+                await new Promise((resolve, reject) => {
+                    const xhr = new XMLHttpRequest();
+                    
+                    xhr.upload.addEventListener('progress', (e) => {
+                        if (e.lengthComputable) {
+                            const percent = Math.round((e.loaded / e.total) * 100);
+                            progressFill.style.width = `${percent}%`;
+                            progressText.textContent = `${percent}% - Uploading ${file.name}`;
+                        }
+                    });
+
+                    xhr.onload = () => {
+                        if (xhr.status === 200) {
+                            showToast(`✓ ${file.name} uploaded`, 'success');
+                            resolve();
+                        } else if (xhr.status === 401) {
+                            showToast('Session expired. Please login again.', 'error');
+                            localStorage.removeItem('token');
+                            window.location.href = '/login';
+                            reject();
+                        } else {
+                            reject();
+                        }
+                    };
+                    xhr.onerror = () => reject();
+                    
+                    xhr.open('POST', '/api/upload');
+                    xhr.setRequestHeader('x-api-key', apiKey);
+                    xhr.send(formData);
+                });
+            }
+
+            progressContainer.style.display = 'none';
+            progressFill.style.width = '0%';
+            selectedFiles = [];
+            loadFileList();
+            showToast('All files uploaded successfully!', 'success');
         }
 
         async function loadFileList() {
+            const container = document.getElementById('fileListContainer');
+            container.innerHTML = '<div class="empty-state">Loading...</div>';
+            
+            const token = localStorage.getItem('token');
+            if (!token) {
+                container.innerHTML = '<div class="empty-state"><a href="/login" style="color: #667eea;">Login</a> to see your uploaded files</div>';
+                return;
+            }
+
             try {
-                const res = await fetch('/api/files');
-                const files = await res.json();
+                const res = await fetch('/api/files', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
                 
-                if (files.length === 0) {
-                    fileListBody.innerHTML = '<tr><td colspan="6" class="empty-state">No files uploaded yet</td></tr>';
-                    document.getElementById('totalFiles').textContent = '0';
-                    document.getElementById('totalSize').textContent = '0 MB';
+                if (res.status === 401) {
+                    container.innerHTML = '<div class="empty-state"><a href="/login" style="color: #667eea;">Login</a> to see your uploaded files</div>';
                     return;
                 }
                 
-                let totalBytes = 0;
-                const now = new Date();
+                const files = await res.json();
                 
-                fileListBody.innerHTML = files.map(file => {
-                    totalBytes += file.size;
-                    const isExpired = file.expiredAt && new Date(file.expiredAt) < now;
-                    const expiryText = file.expiryOption === '5m' ? '5 Menit' :
-                                      file.expiryOption === '1d' ? '1 Hari' :
-                                      file.expiryOption === '7d' ? '7 Hari' :
-                                      file.expiryOption === '30d' ? '30 Hari' : 'Never';
+                if (files.length === 0) {
+                    container.innerHTML = '<div class="empty-state">No files uploaded yet</div>';
+                    return;
+                }
+                
+                container.innerHTML = files.map(file => {
+                    const isExpired = file.expiredAt && new Date(file.expiredAt) < new Date();
+                    const expiryText = {
+                        '5m': '5 min',
+                        '1d': '1 day',
+                        '7d': '7 days',
+                        '30d': '30 days',
+                        'never': 'Never'
+                    }[file.expiryOption] || file.expiryOption;
                     
                     return `
-                        <tr>
-                            <td class="file-name">${escapeHtml(file.originalName)}</td>
-                            <td class="file-size">${formatFileSize(file.size)}</td>
-                            <td>${file.type || 'unknown'}</td>
-                            <td>${expiryText}</td>
-                            <td><span class="expiry-badge ${isExpired ? 'expired' : 'active'}">${isExpired ? 'Expired' : 'Active'}</span></td>
-                            <td>
-                                ${!isExpired ? `<a href="/api/file/${file._id}" target="_blank" class="file-link">Download</a>` : '-'}
-                            </td>
-                        </tr>
+                        <div class="file-row">
+                            <div class="file-name">${escapeHtml(file.originalName)}</div>
+                            <div class="file-size">${formatFileSize(file.size)}</div>
+                            <div>${expiryText}</div>
+                            <div>${isExpired ? '<span style="color:#ef4444;">Expired</span>' : '<span style="color:#10b981;">Active</span>'}</div>
+                            <div>${!isExpired ? `<a href="/api/file/${file._id}" target="_blank" class="file-link">Download</a>` : '-'}</div>
+                        </div>
                     `;
                 }).join('');
-                
-                document.getElementById('totalFiles').textContent = files.length;
-                document.getElementById('totalSize').textContent = (totalBytes / (1024 * 1024)).toFixed(1);
             } catch (err) {
-                fileListBody.innerHTML = '<tr><td colspan="6" class="empty-state">Failed to load media library</td></tr>';
+                container.innerHTML = '<div class="empty-state">Failed to load files</div>';
             }
         }
 
@@ -732,12 +674,19 @@
         function showToast(msg, type) {
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
-            toast.textContent = msg;
+            toast.innerHTML = msg;
             document.body.appendChild(toast);
             setTimeout(() => toast.remove(), 3000);
         }
 
         loadFileList();
+
+        // Cek login status untuk update tombol
+        const token = localStorage.getItem('token');
+        if (token) {
+            document.querySelector('.btn-glass').textContent = 'Profile';
+            document.querySelector('.btn-glass').href = '/dashboard';
+        }
     </script>
 </body>
 </html>
