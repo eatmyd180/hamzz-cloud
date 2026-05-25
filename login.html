@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Hamzz Cloud</title>
+    <link rel="icon" type="image/png" href="https://hamzz-cloud.vercel.app/api/file/6a13bbe0cb6883423a83d3be">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap');
 
@@ -11,64 +12,146 @@
 
         body {
             font-family: 'Inter', system-ui, sans-serif;
-            background: #0f0f1a;
+            background: #0a0a0f;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        .bg-gradient {
+        /* Animated Background */
+        .bg-animation {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
             z-index: -1;
-            background: radial-gradient(ellipse at 20% 30%, #667eea15, #0f0f1a);
+            overflow: hidden;
         }
 
-        .login-container {
-            max-width: 440px;
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 30%, #667eea20, #0a0a0f);
+            animation: bgPulse 8s ease-in-out infinite;
+        }
+
+        .bg-animation::after {
+            content: '';
+            position: absolute;
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 32px;
-            padding: 2.5rem;
-            animation: fadeInUp 0.6s ease;
+            height: 100%;
+            background: radial-gradient(circle at 80% 70%, #764ba230, transparent 60%);
+            animation: bgMove 15s ease-in-out infinite;
         }
 
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        @keyframes bgMove {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(10%, 5%); }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(102, 126, 234, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Login Container */
+        .login-container {
+            max-width: 460px;
+            width: 100%;
+            background: rgba(15, 15, 26, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 48px;
+            padding: 2.5rem;
+            animation: slideUpFade 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes slideUpFade {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Logo Section */
         .logo {
             text-align: center;
             margin-bottom: 2rem;
         }
 
-        .logo-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            margin: 0 auto 1rem;
-            animation: float 3s ease-in-out infinite;
+        .logo-wrapper {
+            display: inline-block;
+            animation: logoGlow 3s ease-in-out infinite;
         }
 
-        @keyframes float {
+        @keyframes logoGlow {
+            0%, 100% { filter: drop-shadow(0 0 0px rgba(102, 126, 234, 0)); }
+            50% { filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5)); }
+        }
+
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1rem;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        .logo-icon img {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes logoFloat {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+            50% { transform: translateY(-8px); }
         }
 
         .logo h1 {
-            font-size: 1.75rem;
-            background: linear-gradient(135deg, #fff, #a0a0c0);
+            font-size: 2rem;
+            background: linear-gradient(135deg, #ffffff, #a0a0c0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: -0.02em;
         }
 
         .logo p {
@@ -77,8 +160,10 @@
             margin-top: 0.5rem;
         }
 
+        /* Form Group */
         .form-group {
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
+            position: relative;
         }
 
         label {
@@ -87,49 +172,99 @@
             font-size: 0.875rem;
             font-weight: 500;
             margin-bottom: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .input-wrapper {
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .input-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
+        }
+
+        .input-wrapper:focus-within::before {
+            opacity: 0.15;
         }
 
         input {
             width: 100%;
-            padding: 0.875rem 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
+            padding: 0.875rem 1.25rem;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
             font-size: 1rem;
             color: white;
-            transition: all 0.2s;
+            transition: all 0.3s;
         }
 
         input:focus {
             outline: none;
             border-color: #667eea;
-            background: rgba(0, 0, 0, 0.5);
-            transform: scale(1.01);
+            background: rgba(0, 0, 0, 0.6);
+            transform: translateY(-2px);
         }
 
         input::placeholder {
             color: #5a5a70;
         }
 
+        /* Login Button */
         .login-btn {
             width: 100%;
             background: linear-gradient(135deg, #667eea, #764ba2);
             border: none;
-            padding: 0.875rem;
+            padding: 1rem;
             border-radius: 40px;
             font-size: 1rem;
             font-weight: 600;
             color: white;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            position: relative;
+            overflow: hidden;
             margin-top: 0.5rem;
         }
 
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
 
+        .login-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Register Link */
         .register-link {
             text-align: center;
             margin-top: 1.5rem;
@@ -140,12 +275,25 @@
         .register-link a {
             color: #667eea;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
         }
 
-        .register-link a:hover {
-            text-decoration: underline;
+        .register-link a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transition: width 0.3s;
+        }
+
+        .register-link a:hover::after {
+            width: 100%;
         }
 
         /* Modal */
@@ -156,8 +304,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
             z-index: 1000;
             align-items: center;
             justify-content: center;
@@ -168,21 +316,38 @@
             display: flex;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         .modal-content {
-            background: rgba(30, 30, 42, 0.95);
+            background: rgba(20, 20, 35, 0.95);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(102, 126, 234, 0.3);
-            border-radius: 32px;
+            border-radius: 40px;
             padding: 2rem;
             max-width: 440px;
             width: 90%;
-            animation: scaleIn 0.3s ease;
+            animation: modalScaleIn 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        @keyframes modalScaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .modal-content h2 {
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             margin-bottom: 0.5rem;
+            font-weight: 700;
         }
 
         .modal-content p {
@@ -199,17 +364,23 @@
 
         .modal-btn {
             flex: 1;
-            padding: 0.75rem;
+            padding: 0.875rem;
             border-radius: 40px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            font-size: 0.875rem;
         }
 
         .modal-btn.cancel {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: white;
+        }
+
+        .modal-btn.cancel:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
         }
 
         .modal-btn.submit {
@@ -218,71 +389,85 @@
             color: white;
         }
 
-        /* Toast Notification */
+        .modal-btn.submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Toast */
         .toast {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            background: #1e1e2a;
+            background: rgba(30, 30, 42, 0.95);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(102, 126, 234, 0.3);
             padding: 1rem 1.5rem;
-            border-radius: 16px;
+            border-radius: 20px;
             color: white;
             z-index: 1001;
-            animation: slideInRight 0.3s ease;
+            animation: slideInRight 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            font-size: 0.875rem;
         }
 
         .toast.success {
             border-color: #10b981;
-            background: rgba(16, 185, 129, 0.1);
+            background: rgba(16, 185, 129, 0.15);
         }
         .toast.error {
             border-color: #ef4444;
-            background: rgba(239, 68, 68, 0.1);
-        }
-        .toast-icon {
-            font-size: 1.25rem;
+            background: rgba(239, 68, 68, 0.15);
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
         @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="bg-gradient"></div>
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
 
     <div class="login-container">
         <div class="logo">
-            <div class="logo-icon">☁️</div>
+            <div class="logo-wrapper">
+                <div class="logo-icon">
+                    <img src="https://hamzz-cloud.vercel.app/api/file/6a13bbe0cb6883423a83d3be" alt="Hamzz Cloud Logo">
+                </div>
+            </div>
             <h1>Hamzz Cloud</h1>
-            <p>Sign in to your account</p>
+            <p>Welcome back! Please sign in</p>
         </div>
 
         <form id="loginForm">
             <div class="form-group">
                 <label>Username or Email</label>
-                <input type="text" id="username" placeholder="Enter your username or email" required>
+                <div class="input-wrapper">
+                    <input type="text" id="username" placeholder="Enter your username or email" required>
+                </div>
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" id="password" placeholder="Enter your password" required>
+                <div class="input-wrapper">
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
             </div>
             <button type="submit" class="login-btn">Sign In</button>
         </form>
@@ -319,10 +504,27 @@
     </div>
 
     <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 6 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                particle.style.animationDelay = `${Math.random() * 10}s`;
+                particlesContainer.appendChild(particle);
+            }
+        }
+        createParticles();
+
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
-            toast.innerHTML = `<span class="toast-icon">${type === 'success' ? '✅' : '❌'}</span><span>${message}</span>`;
+            toast.innerHTML = `<span>${type === 'success' ? '✅' : '❌'}</span><span>${message}</span>`;
             document.body.appendChild(toast);
             setTimeout(() => {
                 toast.style.animation = 'slideOutRight 0.3s ease';
@@ -380,7 +582,6 @@
             if (!email) { showToast('Email is required', 'error'); return; }
             if (!password || password.length < 6) { showToast('Password must be at least 6 characters', 'error'); return; }
 
-            const submitBtn = document.getElementById('submitRegister');
             submitBtn.textContent = 'Creating...';
             submitBtn.disabled = true;
 

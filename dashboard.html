@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Hamzz Cloud</title>
+    <link rel="icon" type="image/png" href="https://hamzz-cloud.vercel.app/api/file/6a13bbe0cb6883423a83d3be">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap');
 
@@ -43,13 +44,12 @@
         .logo { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
         .logo-icon {
             width: 40px; height: 40px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
         }
+        .logo-icon img { width: 32px; height: 32px; border-radius: 8px; }
         .logo h1 {
             font-size: 1.5rem;
             background: linear-gradient(135deg, #667eea, #764ba2);
@@ -141,7 +141,6 @@
         }
         .upload-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3); }
 
-        /* Animated Cloud Loading */
         .cloud-loading {
             display: flex;
             flex-direction: column;
@@ -157,7 +156,6 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
-        .loading-text { color: #a0a0b0; font-size: 0.875rem; }
 
         .progress-container { margin-top: 1rem; display: none; }
         .progress-bar-wrapper {
@@ -174,7 +172,6 @@
             transition: width 0.3s;
         }
 
-        /* URL Result Card */
         .url-result {
             background: rgba(16, 185, 129, 0.1);
             border: 1px solid rgba(16, 185, 129, 0.3);
@@ -302,14 +299,6 @@
             text-transform: uppercase;
         }
         .file-name { color: white; font-weight: 500; word-break: break-word; }
-        .file-url-input {
-            font-size: 0.7rem;
-            background: rgba(0,0,0,0.3);
-            padding: 0.25rem 0.5rem;
-            border-radius: 6px;
-            font-family: monospace;
-            color: #a0a0b0;
-        }
 
         .toast {
             position: fixed;
@@ -353,7 +342,9 @@
 
     <nav class="navbar">
         <div class="logo" onclick="window.location.href='/'">
-            <div class="logo-icon">☁️</div>
+            <div class="logo-icon">
+                <img src="https://hamzz-cloud.vercel.app/api/file/6a13bbe0cb6883423a83d3be" alt="Hamzz Cloud Logo">
+            </div>
             <h1>Hamzz Cloud</h1>
         </div>
         <div class="nav-links">
@@ -516,8 +507,7 @@
                 container.innerHTML = files.map(file => {
                     totalBytes += file.size;
                     const isExpired = file.expiredAt && new Date(file.expiredAt) < new Date();
-                    const fileUrl = `${window.location.origin}/api/file/${file._id}`;
-  return `
+                    return `
                         <div class="file-row">
                             <div class="file-name" title="${escapeHtml(file.originalName)}">${escapeHtml(file.originalName).substring(0, 40)}${escapeHtml(file.originalName).length > 40 ? '...' : ''}</div>
                             <div>${(file.size/1024/1024).toFixed(2)} MB</div>

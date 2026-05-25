@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hamzz Cloud - Professional File Upload Platform</title>
+    <link rel="icon" type="image/png" href="https://hamzz-cloud.vercel.app/api/file/6a13bbe0cb6883423a83d3be">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap');
 
@@ -50,13 +51,19 @@
         .logo-icon {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.25rem;
+            background: rgba(102, 126, 234, 0.2);
             animation: float 3s ease-in-out infinite;
+        }
+
+        .logo-icon img {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
         }
 
         @keyframes float {
@@ -142,7 +149,6 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
 
-        /* Hero Section */
         .hero {
             text-align: center;
             padding: 5rem 1rem;
@@ -172,7 +178,6 @@
             flex-wrap: wrap;
         }
 
-        /* Features */
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -211,7 +216,6 @@
             font-size: 0.875rem;
         }
 
-        /* CTA Section */
         .cta-section {
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
             border-radius: 32px;
@@ -231,7 +235,6 @@
             margin-bottom: 2rem;
         }
 
-        /* Footer */
         .footer {
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             padding: 3rem 2rem 2rem;
@@ -290,7 +293,9 @@
 
     <nav class="navbar">
         <div class="logo" onclick="window.location.href='/'">
-            <div class="logo-icon">☁️</div>
+            <div class="logo-icon">
+                <img src="https://hamzz-cloud.vercel.app/api/file/6a13bbe0cb6883423a83d3be" alt="Hamzz Cloud Logo">
+            </div>
             <h1>Hamzz Cloud</h1>
         </div>
         <div class="nav-links">
