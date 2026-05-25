@@ -55,6 +55,12 @@
             justify-content: center;
             font-size: 2rem;
             margin: 0 auto 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         .logo h1 {
@@ -98,6 +104,7 @@
             outline: none;
             border-color: #667eea;
             background: rgba(0, 0, 0, 0.5);
+            transform: scale(1.01);
         }
 
         input::placeholder {
@@ -139,17 +146,6 @@
 
         .register-link a:hover {
             text-decoration: underline;
-        }
-
-        .error-msg {
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #f87171;
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            font-size: 0.875rem;
-            margin-bottom: 1rem;
-            display: none;
         }
 
         /* Modal */
@@ -222,19 +218,50 @@
             color: white;
         }
 
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #1e1e2a;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            color: white;
+            z-index: 1001;
+            animation: slideInRight 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .toast.success {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+        .toast.error {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+        .toast-icon {
+            font-size: 1.25rem;
+        }
+
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-
         @keyframes scaleIn {
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
     </style>
 </head>
@@ -247,8 +274,6 @@
             <h1>Hamzz Cloud</h1>
             <p>Sign in to your account</p>
         </div>
-
-        <div class="error-msg" id="errorMsg"></div>
 
         <form id="loginForm">
             <div class="form-group">
@@ -270,7 +295,7 @@
     <!-- Register Modal -->
     <div class="modal" id="registerModal">
         <div class="modal-content">
-            <h2>Create Account</h2>
+            <h2>✨ Create Account</h2>
             <p>Join Hamzz Cloud and start uploading</p>
             
             <div class="form-group">
@@ -294,33 +319,35 @@
     </div>
 
     <script>
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span class="toast-icon">${type === 'success' ? '✅' : '❌'}</span><span>${message}</span>`;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
         const modal = document.getElementById('registerModal');
         const registerBtn = document.getElementById('registerBtn');
         const cancelBtn = document.getElementById('cancelRegister');
         const submitBtn = document.getElementById('submitRegister');
 
-        registerBtn.addEventListener('click', () => {
-            modal.classList.add('active');
-        });
-
+        registerBtn.addEventListener('click', () => { modal.classList.add('active'); });
         cancelBtn.addEventListener('click', () => {
             modal.classList.remove('active');
             document.getElementById('regUsername').value = '';
             document.getElementById('regEmail').value = '';
             document.getElementById('regPassword').value = '';
         });
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.remove('active');
-            }
-        });
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
 
         async function handleLogin(e) {
             e.preventDefault();
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            const errorMsg = document.getElementById('errorMsg');
 
             try {
                 const res = await fetch('/api/auth/login', {
@@ -334,16 +361,13 @@
                 if (data.success) {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('user', JSON.stringify(data.user));
-                    window.location.href = '/dashboard';
+                    showToast('Welcome back! Redirecting...', 'success');
+                    setTimeout(() => window.location.href = '/dashboard', 1500);
                 } else {
-                    errorMsg.textContent = data.error || 'Invalid username or password';
-                    errorMsg.style.display = 'block';
-                    setTimeout(() => { errorMsg.style.display = 'none'; }, 3000);
+                    showToast(data.error || 'Invalid credentials', 'error');
                 }
             } catch (err) {
-                errorMsg.textContent = 'Network error. Please try again.';
-                errorMsg.style.display = 'block';
-                setTimeout(() => { errorMsg.style.display = 'none'; }, 3000);
+                showToast('Network error. Please try again.', 'error');
             }
         }
 
@@ -352,18 +376,13 @@
             const email = document.getElementById('regEmail').value.trim();
             const password = document.getElementById('regPassword').value;
 
-            if (!username) {
-                alert('Username is required');
-                return;
-            }
-            if (!email) {
-                alert('Email is required');
-                return;
-            }
-            if (!password || password.length < 6) {
-                alert('Password must be at least 6 characters');
-                return;
-            }
+            if (!username) { showToast('Username is required', 'error'); return; }
+            if (!email) { showToast('Email is required', 'error'); return; }
+            if (!password || password.length < 6) { showToast('Password must be at least 6 characters', 'error'); return; }
+
+            const submitBtn = document.getElementById('submitRegister');
+            submitBtn.textContent = 'Creating...';
+            submitBtn.disabled = true;
 
             try {
                 const res = await fetch('/api/auth/register', {
@@ -378,24 +397,24 @@
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('user', JSON.stringify(data.user));
                     modal.classList.remove('active');
-                    alert('Account created successfully!');
-                    window.location.href = '/dashboard';
+                    showToast('Account created successfully! 🎉', 'success');
+                    setTimeout(() => window.location.href = '/dashboard', 1500);
                 } else {
-                    alert(data.error || 'Registration failed');
+                    showToast(data.error || 'Registration failed', 'error');
                 }
             } catch (err) {
-                alert('Network error. Please try again.');
+                showToast('Network error. Please try again.', 'error');
+            } finally {
+                submitBtn.textContent = 'Create Account';
+                submitBtn.disabled = false;
             }
         }
 
         document.getElementById('loginForm').addEventListener('submit', handleLogin);
         submitBtn.addEventListener('click', handleRegister);
 
-        // Check if already logged in
         const token = localStorage.getItem('token');
-        if (token) {
-            window.location.href = '/dashboard';
-        }
+        if (token) window.location.href = '/dashboard';
     </script>
 </body>
 </html>
