@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Hamzz Cloud</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stat-card h3 {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        /* Upload Section */
+        .upload-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .upload-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .upload-area {
+            padding: 3rem;
+            text-align: center;
+            border: 2px dashed #cbd5e1;
+            margin: 1.5rem;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .upload-area.drag-over {
+            border-color: #667eea;
+            background: #f0f0ff;
+        }
+
+        .expiry-section {
+            padding: 0 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .expiry-options {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .expiry-option input {
+            display: none;
+        }
+
+        .expiry-option label {
+            padding: 0.5rem 1rem;
+            background: #f1f5f9;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        .expiry-option input:checked + label {
+            background: #667eea;
+            color: white;
+        }
+
+        .upload-btn {
+            margin: 1.5rem;
+            width: calc(100% - 3rem);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* API Keys Section */
+        .api-keys-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .api-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .create-key-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .api-key-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .api-key-code {
+            font-family: monospace;
+            background: #f1f5f9;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+        }
+
+        .delete-key {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+        }
+
+        /* Files Table */
+        .files-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .files-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .file-link {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #1e293b;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo"><h1>Hamzz Cloud</h1></div>
+        <div class="nav-links">
+            <span id="userName"></span>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card"><h3>Total Files</h3><div class="value" id="totalFiles">0</div></div>
+            <div class="stat-card"><h3>Storage Used</h3><div class="value" id="totalSize">0 MB</div></div>
+            <div class="stat-card"><h3>API Keys</h3><div class="value" id="totalKeys">0</div></div>
+        </div>
+
+        <div class="upload-card">
+            <div class="upload-header"><h2>Upload File</h2></div>
+            <div class="upload-area" id="uploadArea">
+                <p>📁 Drag & drop or click to browse</p>
+                <input type="file" id="fileInput" style="display:none">
+            </div>
+            <div class="expiry-section">
+                <div>Link Expiry:</div>
+                <div class="expiry-options" id="expiryOptions">
+                    <div class="expiry-option"><input type="radio" name="expiry" value="5m" id="exp5m"><label for="exp5m">5 Menit</label></div>
+                    <div class="expiry-option"><input type="radio" name="expiry" value="1d" id="exp1d"><label for="exp1d">1 Hari</label></div>
+                    <div class="expiry-option"><input type="radio" name="expiry" value="7d" id="exp7d"><label for="exp7d">7 Hari</label></div>
+                    <div class="expiry-option"><input type="radio" name="expiry" value="30d" id="exp30d"><label for="exp30d">30 Hari</label></div>
+                    <div class="expiry-option"><input type="radio" name="expiry" value="never" id="expNever" checked><label for="expNever">Never</label></div>
+                </div>
+            </div>
+            <button class="upload-btn" id="uploadBtn">Upload to Cloud</button>
+        </div>
+
+        <div class="api-keys-card">
+            <div class="api-header"><h3>API Keys</h3><button class="create-key-btn" onclick="createApiKey()">+ Create API Key</button></div>
+            <div id="apiKeysList"></div>
+        </div>
+
+        <div class="files-card">
+            <div class="files-header"><h3>My Files</h3><button onclick="loadFiles()">Refresh</button></div>
+            <table>
+                <thead><tr><th>Name</th><th>Size</th><th>Expiry</th><th>Status</th><th>Action</th></tr></thead>
+                <tbody id="filesList"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('token');
+        if (!token) window.location.href = '/login';
+
+        let selectedFiles = [];
+
+        async function apiCall(endpoint, options = {}) {
+            const res = await fetch(endpoint, {
+                ...options,
+                headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json', ...options.headers }
+            });
+            if (res.status === 401) { localStorage.clear(); window.location.href = '/login'; }
+            return res.json();
+        }
+
+        async function loadUser() {
+            const data = await apiCall('/api/auth/me');
+            if (data.user) {
+                document.getElementById('userName').innerText = data.user.username;
+                document.getElementById('totalKeys').innerText = data.apiKeys.length;
+                loadApiKeys();
+            }
+        }
+
+        async function loadApiKeys() {
+            const keys = await apiCall('/api/keys');
+            const container = document.getElementById('apiKeysList');
+            if (keys.length === 0) { container.innerHTML = '<div style="padding:1.5rem;text-align:center;color:#64748b;">No API keys yet</div>'; return; }
+            container.innerHTML = keys.map(key => `
+                <div class="api-key-item">
+                    <div><strong>${key.name}</strong><br><span class="api-key-code">${key.apiKey}</span><br><small>Plan: ${key.plan} | Used: ${key.requestsUsed}/${key.rateLimit}</small></div>
+                    <button class="delete-key" onclick="deleteKey('${key._id}')">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        async function createApiKey() {
+            const name = prompt('API Key name:');
+            if (!name) return;
+            const plan = prompt('Plan (free/basic/pro/enterprise):', 'free');
+            await apiCall('/api/keys', { method: 'POST', body: JSON.stringify({ name, plan }) });
+            loadUser();
+            showToast('API Key created');
+        }
+
+        async function deleteKey(id) {
+            if (!confirm('Delete this API key?')) return;
+            await apiCall(`/api/keys/${id}`, { method: 'DELETE' });
+            loadUser();
+        }
+
+        async function loadFiles() {
+            const files = await apiCall('/api/files');
+            document.getElementById('totalFiles').innerText = files.length;
+            let totalBytes = 0;
+            const tbody = document.getElementById('filesList');
+            if (files.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">No files</td></tr>'; return; }
+            tbody.innerHTML = files.map(file => {
+                totalBytes += file.size;
+                const isExpired = file.expiredAt && new Date(file.expiredAt) < new Date();
+                const expiryText = {5m:'5m',1d:'1d',7d:'7d',30d:'30d',never:'Never'}[file.expiryOption] || file.expiryOption;
+                return `<tr>
+                    <td>${escapeHtml(file.originalName)}</td>
+                    <td>${(file.size/1024/1024).toFixed(2)} MB</td>
+                    <td>${expiryText}</td>
+                    <td>${isExpired ? 'Expired' : 'Active'}</td>
+                    <td>${!isExpired ? `<a href="/api/file/${file._id}" target="_blank" class="file-link">Download</a>` : '-'}</td>
+                </tr>`;
+            }).join('');
+            document.getElementById('totalSize').innerText = (totalBytes/1024/1024).toFixed(1);
+        }
+
+        function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){return m==='&'?'&amp;':m==='<'?'&lt;':'&gt;';}); }
+
+        function showToast(msg) { const t=document.createElement('div');t.className='toast';t.innerText=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3000);}
+        function logout() { localStorage.clear(); window.location.href='/login'; }
+
+        // Upload
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        uploadArea.addEventListener('click',()=>fileInput.click());
+        uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
+        uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
+        uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');selectedFiles=Array.from(e.dataTransfer.files);uploadFiles();});
+        fileInput.addEventListener('change',e=>{selectedFiles=Array.from(e.target.files);uploadFiles();});
+
+        async function uploadFiles() {
+            if(selectedFiles.length===0) return;
+            const expiry = document.querySelector('input[name="expiry"]:checked').value;
+            for(const file of selectedFiles){
+                const formData = new FormData();
+                formData.append('file',file);
+                formData.append('expiry',expiry);
+                const res = await fetch('/api/upload',{method:'POST',headers:{'x-api-key':(await getFirstApiKey())},body:formData});
+                const data = await res.json();
+                showToast(`Uploaded: ${file.name} - ${data.expiryMessage}`);
+            }
+            loadFiles();
+        }
+
+        async function getFirstApiKey() { const keys = await apiCall('/api/keys'); return keys[0]?.apiKey; }
+
+        loadUser(); loadFiles();
+    </script>
+</body>
+</html>
