@@ -36,7 +36,7 @@ const apiKeySchema = new mongoose.Schema({
   apiKey: { type: String, unique: true, required: true },
   name: { type: String, required: true },
   plan: { type: String, default: 'free' },
-  rateLimit: { type: Number, default: 20 },
+  rateLimit: { type: Number, default: 100 },
   requestsUsed: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
   lastUsed: { type: Date },
@@ -62,30 +62,56 @@ const User = mongoose.model('User', userSchema);
 const ApiKey = mongoose.model('ApiKey', apiKeySchema);
 const File = mongoose.model('File', fileSchema);
 
-// ============ DATABASE CONNECTION ============
+// ============ DATABASE CONNECTION with better options ============
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-mongoose.connect(MONGODB_URI, {
-  serverSelectionTimeoutMS: 5000
-}).then(async () => {
-  console.log('MongoDB connected');
-  await File.collection.createIndex({ expiredAt: 1 }, { expireAfterSeconds: 0 });
+// Connection options untuk menghindari timeout
+const connectionOptions = {
+  serverSelectionTimeoutMS: 30000,
+  connectTimeoutMS: 30000,
+  socketTimeoutMS: 45000,
+  family: 4
+};
+
+let isConnected = false;
+
+async function connectDB() {
+  if (isConnected) return;
   
-  const adminExists = await User.findOne({ username: 'admin' });
-  if (!adminExists) {
-    const hashedPassword = await bcrypt.hash('admin123', 10);
-    await User.create({
-      username: 'admin',
-      email: 'admin@hamzz.cloud',
-      password: hashedPassword,
-      role: 'admin'
-    });
-    console.log('Default admin created: admin / admin123');
+  try {
+    await mongoose.connect(MONGODB_URI, connectionOptions);
+    isConnected = true;
+    console.log('MongoDB connected');
+    
+    await File.collection.createIndex({ expiredAt: 1 }, { expireAfterSeconds: 0 });
+    
+    const adminExists = await User.findOne({ username: 'admin' });
+    if (!adminExists) {
+      const hashedPassword = await bcrypt.hash('admin123', 10);
+      await User.create({
+        username: 'admin',
+        email: 'admin@hamzz.cloud',
+        password: hashedPassword,
+        role: 'admin'
+      });
+      console.log('Default admin created: admin / admin123');
+    }
+  } catch (err) {
+    console.error('MongoDB connection error:', err);
+    throw err;
   }
-}).catch(err => {
-  console.error('MongoDB connection error:', err);
-});
+}
+
+// Middleware untuk koneksi database
+async function dbMiddleware(req, res, next) {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(500).json({ error: 'Database connection failed. Please try again.' });
+  }
+}
 
 // ============ HELPER FUNCTIONS ============
 
@@ -105,6 +131,7 @@ function generateApiKey() {
 }
 
 async function authenticateAPIKey(apiKey) {
+  await connectDB();
   const keyDoc = await ApiKey.findOne({ apiKey: apiKey, isActive: true });
   if (!keyDoc) return null;
   
@@ -158,7 +185,7 @@ const upload = multer({
 
 // ============ AUTH ENDPOINTS ============
 
-app.post('/api/auth/register', async (req, res) => {
+app.post('/api/auth/register', dbMiddleware, async (req, res) => {
   try {
     const { username, email, password } = req.body;
     
@@ -180,7 +207,7 @@ app.post('/api/auth/register', async (req, res) => {
       apiKey: apiKey,
       name: 'Default API Key',
       plan: 'free',
-      rateLimit: 20
+      rateLimit: 100
     });
     
     const token = jwt.sign({ userId: user._id, username: user.username }, JWT_SECRET, { expiresIn: '7d' });
@@ -191,7 +218,7 @@ app.post('/api/auth/register', async (req, res) => {
   }
 });
 
-app.post('/api/auth/login', async (req, res) => {
+app.post('/api/auth/login', dbMiddleware, async (req, res) => {
   try {
     const { username, password } = req.body;
     
@@ -213,7 +240,7 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
-app.get('/api/auth/me', jwtAuth, async (req, res) => {
+app.get('/api/auth/me', jwtAuth, dbMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.user.userId).select('-password');
     const apiKeys = await ApiKey.find({ userId: req.user.userId });
@@ -226,15 +253,15 @@ app.get('/api/auth/me', jwtAuth, async (req, res) => {
 
 // ============ API KEY MANAGEMENT ============
 
-app.post('/api/keys', jwtAuth, async (req, res) => {
+app.post('/api/keys', jwtAuth, dbMiddleware, async (req, res) => {
   try {
     const { name, plan } = req.body;
     
     const planLimits = {
-      free: 20,
-      basic: 100,
-      pro: 1000,
-      enterprise: 10000
+      free: 100,
+      basic: 1000,
+      pro: 10000,
+      enterprise: 100000
     };
     
     const apiKey = generateApiKey();
@@ -243,7 +270,7 @@ app.post('/api/keys', jwtAuth, async (req, res) => {
       apiKey: apiKey,
       name: name || 'New API Key',
       plan: plan || 'free',
-      rateLimit: planLimits[plan] || 20
+      rateLimit: planLimits[plan] || 100
     });
     
     res.json({ success: true, apiKey: keyDoc.apiKey, name: keyDoc.name, plan: keyDoc.plan, rateLimit: keyDoc.rateLimit });
@@ -252,7 +279,7 @@ app.post('/api/keys', jwtAuth, async (req, res) => {
   }
 });
 
-app.get('/api/keys', jwtAuth, async (req, res) => {
+app.get('/api/keys', jwtAuth, dbMiddleware, async (req, res) => {
   try {
     const keys = await ApiKey.find({ userId: req.user.userId });
     res.json(keys);
@@ -261,7 +288,7 @@ app.get('/api/keys', jwtAuth, async (req, res) => {
   }
 });
 
-app.delete('/api/keys/:id', jwtAuth, async (req, res) => {
+app.delete('/api/keys/:id', jwtAuth, dbMiddleware, async (req, res) => {
   try {
     await ApiKey.findOneAndDelete({ _id: req.params.id, userId: req.user.userId });
     res.json({ success: true });
@@ -272,7 +299,7 @@ app.delete('/api/keys/:id', jwtAuth, async (req, res) => {
 
 // ============ UPLOAD ENDPOINT ============
 
-app.post('/api/upload', apiKeyAuth, upload.single('file'), async (req, res) => {
+app.post('/api/upload', apiKeyAuth, dbMiddleware, upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -319,7 +346,7 @@ app.post('/api/upload', apiKeyAuth, upload.single('file'), async (req, res) => {
 
 // ============ GET FILE ============
 
-app.get('/api/file/:id', async (req, res) => {
+app.get('/api/file/:id', dbMiddleware, async (req, res) => {
   try {
     const file = await File.findById(req.params.id);
     
@@ -341,7 +368,7 @@ app.get('/api/file/:id', async (req, res) => {
 
 // ============ GET FILES LIST ============
 
-app.get('/api/files', jwtAuth, async (req, res) => {
+app.get('/api/files', jwtAuth, dbMiddleware, async (req, res) => {
   try {
     const files = await File.find(
       { 
@@ -378,6 +405,10 @@ app.get('/login', (req, res) => {
 
 app.get('/dashboard', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'dashboard.html'));
+});
+
+app.get('/upload', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'upload.html'));
 });
 
 app.get('/', (req, res) => {

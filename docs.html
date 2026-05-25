@@ -117,7 +117,7 @@
             animation: fadeInUp 0.6s ease;
         }
 
-        .hero h1 { font-size: 2.5rem; color: white; margin-bottom: 1rem; }
+        .hero h1 { font-size: 2.5rem; color: white; margin-bottom: 1rem; word-break: break-word; }
         .hero p { color: rgba(255,255,255,0.9); font-size: 1.125rem; }
         .base-url {
             background: rgba(0,0,0,0.3);
@@ -126,8 +126,11 @@
             font-family: 'JetBrains Mono', monospace;
             display: inline-block;
             margin-top: 1rem;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            word-break: break-all;
         }
+
+        h2 { color: white; margin: 2rem 0 1rem; font-size: 1.5rem; }
 
         .endpoint {
             background: rgba(255, 255, 255, 0.05);
@@ -135,8 +138,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             margin-bottom: 1.5rem;
-            overflow: hidden;
-            animation: fadeInUp 0.6s ease 0.1s both;
+            overflow-x: auto;
         }
 
         .endpoint-header {
@@ -160,12 +162,13 @@
 
         .path {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.125rem;
+            font-size: 1rem;
             font-weight: 500;
             color: white;
+            word-break: break-word;
         }
 
-        .endpoint-body { padding: 1.5rem; }
+        .endpoint-body { padding: 1.5rem; overflow-x: auto; }
 
         h4 { color: white; margin: 1.5rem 0 0.75rem; font-size: 1rem; }
         h4:first-of-type { margin-top: 0; }
@@ -174,15 +177,15 @@
             background: #0a0a0f;
             border: 1px solid #2a2a3a;
             border-radius: 12px;
-            padding: 1.25rem;
+            padding: 1rem;
             overflow-x: auto;
             margin: 0.75rem 0;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         code {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #e2e8f0;
             line-height: 1.5;
         }
@@ -193,12 +196,15 @@
             border-radius: 12px;
             padding: 1rem;
             margin: 0.75rem 0;
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 1rem 0;
+            display: block;
+            overflow-x: auto;
         }
         th, td {
             padding: 0.75rem;
@@ -218,7 +224,11 @@
             .hero { padding: 1.5rem; }
             .hero h1 { font-size: 1.5rem; }
             .container { padding: 1rem; }
+            .endpoint-header { padding: 1rem; }
+            .endpoint-body { padding: 1rem; }
             pre { font-size: 0.7rem; padding: 0.75rem; }
+            code { font-size: 0.7rem; }
+            th, td { padding: 0.5rem; font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -232,10 +242,11 @@
         </div>
         <div class="nav-links">
             <a href="/">Home</a>
+            <a href="/upload">Upload</a>
             <a href="/docs">Docs</a>
             <a href="/pricing">Pricing</a>
-            <a href="/login" class="btn-glass">Sign In</a>
-            <a href="/dashboard" class="btn-primary">Dashboard</a>
+            <a href="/login" class="btn-glass" id="authBtn">Sign In</a>
+            <a href="/dashboard" class="btn-primary" id="dashboardBtn" style="display:none;">Dashboard</a>
         </div>
     </nav>
 
@@ -246,7 +257,7 @@
             <div class="base-url">Base URL: https://hamzz-cloud.vercel.app/api\</div\>
         </div>
 
-        <h2 style="color: white; margin-bottom: 1rem;">Authentication</h2>
+        <h2>Authentication</h2>
         <div class="endpoint">
             <div class="endpoint-body">
                 <p style="color: #c0c0d0; margin-bottom: 1rem;">Semua endpoint memerlukan <strong style="color: #667eea;">API Key</strong> yang dapat diperoleh dari dashboard setelah registrasi.</p>
@@ -257,7 +268,7 @@
             </div>
         </div>
 
-        <h2 style="color: white; margin: 2rem 0 1rem;">Endpoints</h2>
+        <h2>Endpoints</h2>
 
         <!-- POST /upload -->
         <div class="endpoint">
@@ -270,9 +281,11 @@
                 
                 <h4>📋 Parameters (multipart/form-data)</h4>
                 <table>
-                    <tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
-                    <tr><td>file</td><td>File</td><td>Yes</td><td>File yang akan diupload (max 50MB)</td></tr>
-                    <tr><td>expiry</td><td>String</td><td>No</td><td>5m, 1d, 7d, 30d, never (default: never)</td></tr>
+                    <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td>file</td><td>File</td><td>Yes</td><td>File yang akan diupload (max 50MB)</td></tr>
+                        <tr><td>expiry</td><td>String</td><td>No</td><td>5m, 1d, 7d, 30d, never (default: never)</td></tr>
+                    </tbody>
                 </table>
 
                 <h4>📝 Example Request (cURL)</h4>
@@ -324,7 +337,7 @@
             </div>
         </div>
 
-        <h2 style="color: white; margin: 2rem 0 1rem;">Integration Examples</h2>
+        <h2>Integration Examples</h2>
 
         <div class="endpoint">
             <div class="endpoint-header"><span class="path">Node.js / JavaScript</span></div>
@@ -386,5 +399,16 @@ print(response.json()["fullUrl"])</code></pre>
             </div>
         </div>
     </div>
+
+    <script>
+        const token = localStorage.getItem('token');
+        const authBtn = document.getElementById('authBtn');
+        const dashboardBtn = document.getElementById('dashboardBtn');
+        
+        if (token) {
+            authBtn.style.display = 'none';
+            dashboardBtn.style.display = 'inline-block';
+        }
+    </script>
 </body>
 </html>

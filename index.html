@@ -3,23 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamzz Cloud - Professional Media Uploader</title>
+    <title>Hamzz Cloud - Professional File Upload Platform</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', system-ui, sans-serif;
             background: #0f0f1a;
             min-height: 100vh;
         }
 
-        /* Animated Background */
         .bg-gradient {
             position: fixed;
             top: 0;
@@ -27,42 +22,9 @@
             right: 0;
             bottom: 0;
             z-index: -1;
-            overflow: hidden;
+            background: radial-gradient(ellipse at 20% 30%, #667eea15, #0f0f1a);
         }
 
-        .bg-gradient::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(ellipse at 20% 30%, #667eea20, #0f0f1a);
-            animation: pulse 8s ease-in-out infinite;
-        }
-
-        .bg-gradient::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 70% 60%, #764ba220, transparent 50%);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Glassmorphism Navbar */
         .navbar {
             position: sticky;
             top: 0;
@@ -124,9 +86,7 @@
             font-weight: 500;
         }
 
-        .nav-links a:hover {
-            color: #667eea;
-        }
+        .nav-links a:hover { color: #667eea; }
 
         .btn-glass {
             background: rgba(102, 126, 234, 0.15);
@@ -152,7 +112,9 @@
             color: white;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-primary:hover {
@@ -160,254 +122,165 @@
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(102, 126, 234, 0.5);
+            padding: 0.75rem 1.75rem;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
+
+        .btn-outline:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
 
         /* Hero Section */
         .hero {
             text-align: center;
-            padding: 3rem 1rem 4rem;
+            padding: 5rem 1rem;
+            animation: fadeInUp 0.6s ease;
         }
 
         .hero h1 {
             font-size: 3.5rem;
-            font-weight: 700;
+            font-weight: 800;
             background: linear-gradient(135deg, #ffffff, #a0a0c0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
-            animation: fadeInUp 0.6s ease;
         }
 
         .hero p {
             color: #a0a0b0;
-            font-size: 1.125rem;
-            animation: fadeInUp 0.6s ease 0.1s both;
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
-        /* Upload Card */
-        .upload-card {
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 4rem 0;
+        }
+
+        .feature-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 32px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            transition: all 0.3s;
-        }
-
-        .upload-card:hover {
-            border-color: rgba(102, 126, 234, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .upload-area {
-            border: 2px dashed rgba(102, 126, 234, 0.4);
             border-radius: 24px;
-            padding: 3rem;
+            padding: 2rem;
             text-align: center;
-            cursor: pointer;
             transition: all 0.3s;
-            background: rgba(0, 0, 0, 0.2);
         }
 
-        .upload-area.drag-over {
-            border-color: #667eea;
-            background: rgba(102, 126, 234, 0.1);
-            transform: scale(1.01);
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(102, 126, 234, 0.5);
         }
 
-        .upload-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #667eea20, #764ba220);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            font-size: 2.5rem;
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
         }
 
-        .upload-area h3 {
+        .feature-card h3 {
             color: white;
+            font-size: 1.25rem;
             margin-bottom: 0.5rem;
         }
 
-        .expiry-section {
-            margin: 1.5rem 0;
-        }
-
-        .expiry-label {
-            color: #c0c0d0;
-            font-size: 0.875rem;
-            margin-bottom: 0.75rem;
-            display: block;
-        }
-
-        .expiry-options {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        .expiry-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1.25rem;
-            border-radius: 40px;
-            color: #c0c0d0;
-            cursor: pointer;
-            transition: all 0.2s;
+        .feature-card p {
+            color: #a0a0b0;
             font-size: 0.875rem;
         }
 
-        .expiry-btn.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-color: transparent;
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            border-radius: 32px;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .cta-section h2 {
             color: white;
+            font-size: 2rem;
+            margin-bottom: 1rem;
         }
 
-        .file-list-container {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            overflow: hidden;
+        .cta-section p {
+            color: #a0a0b0;
+            margin-bottom: 2rem;
         }
 
-        .file-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
+        /* Footer */
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 3rem 2rem 2rem;
+            margin-top: 3rem;
         }
 
-        .file-header h3 {
-            color: white;
-            font-size: 1.25rem;
-        }
-
-        .file-table {
-            width: 100%;
-        }
-
-        .file-row {
+        .footer-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            align-items: center;
-            transition: background 0.2s;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .file-row:hover {
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .file-header-row {
-            color: #a0a0b0;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .file-name {
+        .footer-col h4 {
             color: white;
-            font-weight: 500;
+            font-size: 1rem;
+            margin-bottom: 1rem;
         }
 
-        .file-size {
+        .footer-col a {
+            display: block;
             color: #a0a0b0;
-            font-size: 0.875rem;
-        }
-
-        .file-link {
-            color: #667eea;
             text-decoration: none;
             font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            transition: color 0.2s;
         }
 
-        .empty-state {
+        .footer-col a:hover { color: #667eea; }
+
+        .footer-bottom {
             text-align: center;
-            padding: 3rem;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             color: #a0a0b0;
+            font-size: 0.75rem;
         }
 
-        .progress-container {
-            margin-top: 1rem;
-            display: none;
-        }
-
-        .progress-bar-wrapper {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 40px;
-            height: 8px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            height: 100%;
-            width: 0%;
-            border-radius: 40px;
-            transition: width 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: #1e1e2a;
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            padding: 1rem 1.5rem;
-            border-radius: 16px;
-            color: white;
-            z-index: 1000;
-            animation: slideInRight 0.3s ease;
-        }
-
-        .toast.success {
-            border-color: #10b981;
-        }
-
-        .toast.error {
-            border-color: #ef4444;
-        }
-
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 768px) {
             .navbar { padding: 1rem; }
-            .nav-links { gap: 1rem; }
             .hero h1 { font-size: 2rem; }
-            .file-row { grid-template-columns: 1fr 0.5fr 0.5fr 0.5fr 0.5fr; font-size: 0.75rem; }
+            .hero p { font-size: 1rem; }
             .container { padding: 1rem; }
         }
     </style>
@@ -422,270 +295,104 @@
         </div>
         <div class="nav-links">
             <a href="/">Home</a>
+            <a href="/upload">Upload</a>
             <a href="/docs">Docs</a>
             <a href="/pricing">Pricing</a>
-            <a href="/login" class="btn-glass">Sign In</a>
-            <a href="/dashboard" class="btn-primary" style="padding: 0.5rem 1.25rem;">Dashboard</a>
+            <a href="/login" class="btn-glass" id="authBtn">Sign In</a>
+            <a href="/dashboard" class="btn-primary" id="dashboardBtn" style="display:none;">Dashboard</a>
         </div>
     </nav>
 
     <div class="container">
         <div class="hero">
             <h1>Secure File Uploading<br>Made Simple</h1>
-            <p>Upload, share, and manage your files with enterprise-grade security</p>
-        </div>
-
-        <div class="upload-card">
-            <div class="upload-area" id="uploadArea">
-                <div class="upload-icon">📤</div>
-                <h3>Drop files here or click to browse</h3>
-                <p style="color: #a0a0b0; margin-top: 0.5rem;">Maximum file size: 50MB</p>
-                <input type="file" id="fileInput" multiple style="display: none;">
-            </div>
-
-            <div class="expiry-section">
-                <span class="expiry-label">⏱️ Link Expiry Time</span>
-                <div class="expiry-options" id="expiryOptions">
-                    <button class="expiry-btn" data-expiry="5m">5 Minutes</button>
-                    <button class="expiry-btn" data-expiry="1d">1 Day</button>
-                    <button class="expiry-btn" data-expiry="7d">7 Days</button>
-                    <button class="expiry-btn" data-expiry="30d">30 Days</button>
-                    <button class="expiry-btn active" data-expiry="never">Never Expire</button>
-                </div>
-            </div>
-
-            <div class="progress-container" id="progressContainer">
-                <div class="progress-bar-wrapper">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <p style="color: #a0a0b0; font-size: 0.75rem; margin-top: 0.5rem; text-align: center;" id="progressText">0%</p>
+            <p>Upload, share, and manage your files with enterprise-grade security. Get started in minutes.</p>
+            <div class="hero-buttons">
+                <a href="/upload" class="btn-primary">🚀 Try for Free</a>
+                <a href="/pricing" class="btn-outline">💰 View Pricing</a>
             </div>
         </div>
 
-        <div class="file-list-container">
-            <div class="file-header">
-                <h3>Media Library</h3>
-                <button class="btn-glass" onclick="loadFileList()" style="padding: 0.5rem 1rem;">⟳ Refresh</button>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Fast Upload</h3>
+                <p>Upload files up to 50MB instantly with optimized servers</p>
             </div>
-            <div class="file-table">
-                <div class="file-row file-header-row">
-                    <div>File Name</div>
-                    <div>Size</div>
-                    <div>Expiry</div>
-                    <div>Status</div>
-                    <div>Action</div>
-                </div>
-                <div id="fileListContainer">
-                    <div class="empty-state">Loading your files...</div>
-                </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure Storage</h3>
+                <p>End-to-end encryption for all your files</p>
             </div>
+            <div class="feature-card">
+                <div class="feature-icon">⏱️</div>
+                <h3>Expiry Links</h3>
+                <p>Set custom expiry time for your shared links</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>API Access</h3>
+                <p>RESTful API for developers & automation</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>WhatsApp Bot Ready</h3>
+                <p>Easy integration with any WhatsApp bot</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Analytics</h3>
+                <p>Track your uploads and API usage</p>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Ready to get started?</h2>
+            <p>Join thousands of users who trust Hamzz Cloud for their file hosting needs</p>
+            <a href="/register" class="btn-primary" style="padding: 0.75rem 2rem;">Create Free Account</a>
         </div>
     </div>
 
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Product</h4>
+                <a href="/upload">Upload</a>
+                <a href="/pricing">Pricing</a>
+                <a href="/docs">API Docs</a>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <a href="#">About Us</a>
+                <a href="#">Blog</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">GDPR</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="#">Help Center</a>
+                <a href="#">Status</a>
+                <a href="mailto:support@hamzz.cloud">support@hamzz.cloud</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Hamzz Cloud. All rights reserved.</p>
+        </div>
+    </footer>
+
     <script>
-        let selectedFiles = [];
-        let currentExpiry = 'never';
-
-        document.querySelectorAll('.expiry-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.expiry-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentExpiry = btn.dataset.expiry;
-            });
-        });
-
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('fileInput');
-        const progressContainer = document.getElementById('progressContainer');
-        const progressFill = document.getElementById('progressFill');
-        const progressText = document.getElementById('progressText');
-
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.classList.add('drag-over');
-        });
-
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.classList.remove('drag-over');
-        });
-
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.classList.remove('drag-over');
-            handleFiles(Array.from(e.dataTransfer.files));
-        });
-
-        uploadArea.addEventListener('click', () => {
-            fileInput.click();
-        });
-
-        fileInput.addEventListener('change', (e) => {
-            handleFiles(Array.from(e.target.files));
-        });
-
-        function handleFiles(files) {
-            selectedFiles = files.filter(f => f.size <= 50 * 1024 * 1024);
-            if (selectedFiles.length === 0) {
-                showToast('Some files exceed 50MB limit', 'error');
-                return;
-            }
-            uploadFiles();
-        }
-
-        async function getApiKey() {
-            const token = localStorage.getItem('token');
-            if (!token) return null;
-            
-            try {
-                const res = await fetch('/api/keys', {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                const keys = await res.json();
-                return keys[0]?.apiKey || null;
-            } catch(e) {
-                return null;
-            }
-        }
-
-        async function uploadFiles() {
-            if (selectedFiles.length === 0) return;
-
-            const apiKey = await getApiKey();
-            if (!apiKey) {
-                showToast('Please login first to upload files', 'error');
-                setTimeout(() => window.location.href = '/login', 1500);
-                return;
-            }
-
-            progressContainer.style.display = 'block';
-
-            for (let i = 0; i < selectedFiles.length; i++) {
-                const file = selectedFiles[i];
-                const formData = new FormData();
-                formData.append('file', file);
-                formData.append('expiry', currentExpiry);
-
-                await new Promise((resolve, reject) => {
-                    const xhr = new XMLHttpRequest();
-                    
-                    xhr.upload.addEventListener('progress', (e) => {
-                        if (e.lengthComputable) {
-                            const percent = Math.round((e.loaded / e.total) * 100);
-                            progressFill.style.width = `${percent}%`;
-                            progressText.textContent = `${percent}% - Uploading ${file.name}`;
-                        }
-                    });
-
-                    xhr.onload = () => {
-                        if (xhr.status === 200) {
-                            showToast(`✓ ${file.name} uploaded`, 'success');
-                            resolve();
-                        } else if (xhr.status === 401) {
-                            showToast('Session expired. Please login again.', 'error');
-                            localStorage.removeItem('token');
-                            window.location.href = '/login';
-                            reject();
-                        } else {
-                            reject();
-                        }
-                    };
-                    xhr.onerror = () => reject();
-                    
-                    xhr.open('POST', '/api/upload');
-                    xhr.setRequestHeader('x-api-key', apiKey);
-                    xhr.send(formData);
-                });
-            }
-
-            progressContainer.style.display = 'none';
-            progressFill.style.width = '0%';
-            selectedFiles = [];
-            loadFileList();
-            showToast('All files uploaded successfully!', 'success');
-        }
-
-        async function loadFileList() {
-            const container = document.getElementById('fileListContainer');
-            container.innerHTML = '<div class="empty-state">Loading...</div>';
-            
-            const token = localStorage.getItem('token');
-            if (!token) {
-                container.innerHTML = '<div class="empty-state"><a href="/login" style="color: #667eea;">Login</a> to see your uploaded files</div>';
-                return;
-            }
-
-            try {
-                const res = await fetch('/api/files', {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                
-                if (res.status === 401) {
-                    container.innerHTML = '<div class="empty-state"><a href="/login" style="color: #667eea;">Login</a> to see your uploaded files</div>';
-                    return;
-                }
-                
-                const files = await res.json();
-                
-                if (files.length === 0) {
-                    container.innerHTML = '<div class="empty-state">No files uploaded yet</div>';
-                    return;
-                }
-                
-                container.innerHTML = files.map(file => {
-                    const isExpired = file.expiredAt && new Date(file.expiredAt) < new Date();
-                    const expiryText = {
-                        '5m': '5 min',
-                        '1d': '1 day',
-                        '7d': '7 days',
-                        '30d': '30 days',
-                        'never': 'Never'
-                    }[file.expiryOption] || file.expiryOption;
-                    
-                    return `
-                        <div class="file-row">
-                            <div class="file-name">${escapeHtml(file.originalName)}</div>
-                            <div class="file-size">${formatFileSize(file.size)}</div>
-                            <div>${expiryText}</div>
-                            <div>${isExpired ? '<span style="color:#ef4444;">Expired</span>' : '<span style="color:#10b981;">Active</span>'}</div>
-                            <div>${!isExpired ? `<a href="/api/file/${file._id}" target="_blank" class="file-link">Download</a>` : '-'}</div>
-                        </div>
-                    `;
-                }).join('');
-            } catch (err) {
-                container.innerHTML = '<div class="empty-state">Failed to load files</div>';
-            }
-        }
-
-        function formatFileSize(bytes) {
-            if (bytes < 1024) return bytes + ' B';
-            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-        }
-
-        function escapeHtml(str) {
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
-
-        function showToast(msg, type) {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerHTML = msg;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-
-        loadFileList();
-
-        // Cek login status untuk update tombol
         const token = localStorage.getItem('token');
+        const authBtn = document.getElementById('authBtn');
+        const dashboardBtn = document.getElementById('dashboardBtn');
+        
         if (token) {
-            document.querySelector('.btn-glass').textContent = 'Profile';
-            document.querySelector('.btn-glass').href = '/dashboard';
+            authBtn.style.display = 'none';
+            dashboardBtn.style.display = 'inline-block';
         }
     </script>
 </body>
