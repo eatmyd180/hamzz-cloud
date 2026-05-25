@@ -134,6 +134,7 @@
             color: #667eea;
             text-decoration: none;
             font-weight: 500;
+            cursor: pointer;
         }
 
         .register-link a:hover {
@@ -151,15 +152,89 @@
             display: none;
         }
 
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(30, 30, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 32px;
+            padding: 2rem;
+            max-width: 440px;
+            width: 90%;
+            animation: scaleIn 0.3s ease;
+        }
+
+        .modal-content h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-content p {
+            color: #a0a0b0;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-btn.cancel {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .modal-btn.submit {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+        }
+
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
@@ -188,12 +263,58 @@
         </form>
 
         <div class="register-link">
-            Don't have an account? <a href="#" id="registerBtn">Create account</a>
+            Don't have an account? <a id="registerBtn">Create account</a>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <h2>Create Account</h2>
+            <p>Join Hamzz Cloud and start uploading</p>
+            
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="regUsername" placeholder="Choose a username">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="regEmail" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="regPassword" placeholder="Minimal 6 characters">
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" id="cancelRegister">Cancel</button>
+                <button class="modal-btn submit" id="submitRegister">Create Account</button>
+            </div>
         </div>
     </div>
 
     <script>
-        const API_URL = '';
+        const modal = document.getElementById('registerModal');
+        const registerBtn = document.getElementById('registerBtn');
+        const cancelBtn = document.getElementById('cancelRegister');
+        const submitBtn = document.getElementById('submitRegister');
+
+        registerBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.getElementById('regUsername').value = '';
+            document.getElementById('regEmail').value = '';
+            document.getElementById('regPassword').value = '';
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
 
         async function handleLogin(e) {
             e.preventDefault();
@@ -227,13 +348,18 @@
         }
 
         async function handleRegister() {
-            const username = prompt('Choose a username:');
-            if (!username) return;
-            
-            const email = prompt('Enter your email:');
-            if (!email) return;
-            
-            const password = prompt('Choose a password (min 6 characters):');
+            const username = document.getElementById('regUsername').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value;
+
+            if (!username) {
+                alert('Username is required');
+                return;
+            }
+            if (!email) {
+                alert('Email is required');
+                return;
+            }
             if (!password || password.length < 6) {
                 alert('Password must be at least 6 characters');
                 return;
@@ -251,6 +377,7 @@
                 if (data.success) {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('user', JSON.stringify(data.user));
+                    modal.classList.remove('active');
                     alert('Account created successfully!');
                     window.location.href = '/dashboard';
                 } else {
@@ -262,10 +389,7 @@
         }
 
         document.getElementById('loginForm').addEventListener('submit', handleLogin);
-        document.getElementById('registerBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            handleRegister();
-        });
+        submitBtn.addEventListener('click', handleRegister);
 
         // Check if already logged in
         const token = localStorage.getItem('token');
